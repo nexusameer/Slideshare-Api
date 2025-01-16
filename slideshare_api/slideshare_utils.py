@@ -2,7 +2,7 @@
 
 import os
 import re
-import requests
+import requests 
 from bs4 import BeautifulSoup
 import img2pdf
 from time import localtime, strftime
