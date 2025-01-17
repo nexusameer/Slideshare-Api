@@ -24,23 +24,23 @@ class SlideShareDownloadView(APIView):
 from django.http import HttpResponse
 import os
 
-def download_pdf(request):
-    # Replace with the URL you want to process
-    url = request.GET.get("url")
-    if not url:
-        return HttpResponse("URL parameter is missing.", status=400)
+# def download_pdf(request):
+#     # Replace with the URL you want to process
+#     url = request.GET.get("url")
+#     if not url:
+#         return HttpResponse("URL parameter is missing.", status=400)
 
-    try:
-        # Generate the PDF from images
-        pdf_path = download_images(url)
+#     try:
+#         # Generate the PDF from images
+#         pdf_path = download_images(url)
         
-        # Serve the PDF file
-        with open(pdf_path, 'rb') as pdf_file:
-            response = HttpResponse(pdf_file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
-            return response
-    except Exception as e:
-        return HttpResponse(f"Error occurred: {e}", status=500)
+#         # Serve the PDF file
+#         with open(pdf_path, 'rb') as pdf_file:
+#             response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+#             response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
+#             return response
+#     except Exception as e:
+#         return HttpResponse(f"Error occurred: {e}", status=500)
     
 
 from django.http import HttpResponse
