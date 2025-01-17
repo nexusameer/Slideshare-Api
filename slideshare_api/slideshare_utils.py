@@ -109,21 +109,21 @@ def download_pdf(request):
         return HttpResponse("URL parameter is missing.", status=400)
 
     try:
-        # Generate the PDF from images (implement download_images function as per your needs)
+        # Generate the PDF from images
         pdf_path = download_images(url)
 
         # Ensure the file exists before serving
-        if os.path.exists(pdf_path):
-            # Open the file in binary mode and serve it
-            with open(pdf_path, 'rb') as pdf_file:
-                response = HttpResponse(pdf_file.read(), content_type='application/pdf')
-                response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
-            
-            # Clean up the generated file after serving
-            os.remove(pdf_path)
-            return response
-        else:
+        if not os.path.exists(pdf_path):
             return HttpResponse("Generated PDF file not found.", status=404)
+
+        # Serve the PDF
+        with open(pdf_path, 'rb') as pdf_file:
+            response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
+        
+        # Cleanup after serving the response
+        os.remove(pdf_path)
+        return response
 
     except Exception as e:
         return HttpResponse(f"Error occurred: {e}", status=500)
