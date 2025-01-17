@@ -8,6 +8,8 @@ from .slideshare_utils import download_images
 import base64
 import os
 from rest_framework import status
+from django.http import HttpResponse
+import os
 
 class SlideShareDownloadView(APIView):
     def post(self, request):
@@ -23,9 +25,6 @@ class SlideShareDownloadView(APIView):
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-from django.http import HttpResponse
-import os
 
 # def download_pdf(request):
 #     # Replace with the URL you want to process
@@ -46,8 +45,7 @@ import os
 #         return HttpResponse(f"Error occurred: {e}", status=500)
     
 
-from django.http import HttpResponse
-import os
+
 
 def download_pdf(request):
     # Get the URL from the request
