@@ -84,7 +84,7 @@ def convert_pdf(img_dir_name, pdf_f):
     print(f"\n3. Done: {pdf_path}")
 
     # Delete images after conversion
-    delete_images(img_dir_name)
+    # delete_images(img_dir_name)
     download_pdf(pdf_path)
     return pdf_path
 
