@@ -1,1 +1,2 @@
-web: gunicorn slideshare_project.wsgi
+web: gunicorn slideshare_project.wsgi --log-file -
+
