@@ -96,6 +96,8 @@ class SlideShareDownloadView(APIView):
         
         if serializer.is_valid():
             url = serializer.validated_data['url']
+            pdf_path = None
+            
             try:
                 # Generate PDF
                 pdf_path = download_images(url)
@@ -106,32 +108,29 @@ class SlideShareDownloadView(APIView):
                         "message": "PDF generation failed"
                     }, status=status.HTTP_400_BAD_REQUEST)
                 
-                # Open the file and create a FileResponse
-                pdf_file = open(pdf_path, 'rb')
-                response = FileResponse(
-                    pdf_file,
-                    content_type='application/pdf',
-                    as_attachment=True,
-                    filename=os.path.basename(pdf_path)
-                )
-                
-                # Add header to force download
+                # Read file in chunks
+                chunk_size = 8192
+                response = HttpResponse(content_type='application/pdf')
                 response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
                 
-                # File will be deleted after response is sent
-                def delete_file_after_response():
-                    pdf_file.close()
-                    if os.path.exists(pdf_path):
-                        os.remove(pdf_path)
+                # Open file and write chunks to response
+                with open(pdf_path, 'rb') as pdf_file:
+                    for chunk in iter(lambda: pdf_file.read(chunk_size), b''):
+                        response.write(chunk)
                 
-                response.close = delete_file_after_response
+                # Clean up the file after sending
+                if os.path.exists(pdf_path):
+                    os.remove(pdf_path)
                 
                 return response
                 
             except Exception as e:
+                # Clean up in case of error
+                if pdf_path and os.path.exists(pdf_path):
+                    os.remove(pdf_path)
                 return Response({
                     "status": "error",
                     "message": str(e)
                 }, status=status.HTTP_400_BAD_REQUEST)
-                
+            
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
