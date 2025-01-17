@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     path('download/', SlideShareDownloadView.as_view(), name='download_slideshare'),
-    path('download-pdf/', views.download_pdf, name='download_pdf'),
+    # path('download-pdf/', views.download_pdf, name='download_pdf'),
 ]
