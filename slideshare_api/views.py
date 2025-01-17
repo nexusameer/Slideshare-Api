@@ -18,11 +18,12 @@ class SlideShareDownloadView(APIView):
             url = serializer.validated_data['url']
             try:
                 # Call your function to download images and convert them to PDF
-                download_images(url)
-                return Response({"message": "Download and conversion successful"}, status=status.HTTP_200_OK)
+                pdf_path = download_images(url)
+                return Response({"message": "Download and conversion successful", "pdf_path": pdf_path}, status=status.HTTP_200_OK)
             except Exception as e:
                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 # def download_pdf(request):
 #     # Replace with the URL you want to process
