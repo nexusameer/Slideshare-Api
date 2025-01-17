@@ -1,4 +1,12 @@
 # slideshare_api/views.py
+# import download.js file in the same directory here
+
+
+
+
+
+
+
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -6,20 +14,20 @@ from rest_framework import status
 from .serializers import SlideShareURLSerializer
 from .slideshare_utils import download_images  # Import your function
 
-class SlideShareDownloadView(APIView):
-    def post(self, request):
-        # Get the URL from the request
-        serializer = SlideShareURLSerializer(data=request.data)
+# class SlideShareDownloadView(APIView):
+#     def post(self, request):
+#         # Get the URL from the request
+#         serializer = SlideShareURLSerializer(data=request.data)
 
-        if serializer.is_valid():
-            url = serializer.validated_data['url']
-            try:
-                # Call your function to download images and convert them to PDF
-                download_images(url)
-                return Response({"message": "Download and conversion successful"}, status=status.HTTP_200_OK)
-            except Exception as e:
-                return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         if serializer.is_valid():
+#             url = serializer.validated_data['url']
+#             try:
+#                 # Call your function to download images and convert them to PDF
+#                 download_images(url)
+#                 return Response({"message": "Download and conversion successful"}, status=status.HTTP_200_OK)
+#             except Exception as e:
+#                 return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 from django.http import HttpResponse
 import os
@@ -73,3 +81,46 @@ def download_pdf(request):
         return HttpResponse(f"Error occurred: {e}", status=500)
 
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import SlideShareURLSerializer
+from .slideshare_utils import download_images
+import base64
+import os
+
+class SlideShareDownloadView(APIView):
+    def post(self, request):
+        serializer = SlideShareURLSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            url = serializer.validated_data['url']
+            try:
+                # Generate PDF temporarily
+                pdf_path = download_images(url)
+                
+                # Read the PDF file and encode it to base64
+                with open(pdf_path, 'rb') as pdf_file:
+                    pdf_content = pdf_file.read()
+                    pdf_base64 = base64.b64encode(pdf_content).decode('utf-8')
+                
+                # Clean up the temporary file
+                os.remove(pdf_path)
+                
+                # Return the base64 encoded PDF with metadata
+                return Response({
+                    "status": "success",
+                    "data": {
+                        "pdf_content": pdf_base64,
+                        "filename": f"slideshare_{url.split('/')[-1]}.pdf",
+                        "content_type": "application/pdf"
+                    }
+                }, status=status.HTTP_200_OK)
+                
+            except Exception as e:
+                return Response({
+                    "status": "error",
+                    "message": str(e)
+                }, status=status.HTTP_400_BAD_REQUEST)
+                
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
