@@ -88,6 +88,7 @@ from .serializers import SlideShareURLSerializer
 from .slideshare_utils import download_images
 import base64
 import os
+from django.http import FileResponse
 
 class SlideShareDownloadView(APIView):
     def post(self, request):
@@ -96,26 +97,36 @@ class SlideShareDownloadView(APIView):
         if serializer.is_valid():
             url = serializer.validated_data['url']
             try:
-                # Generate PDF temporarily
+                # Generate PDF
                 pdf_path = download_images(url)
                 
-                # Read the PDF file and encode it to base64
-                with open(pdf_path, 'rb') as pdf_file:
-                    pdf_content = pdf_file.read()
-                    pdf_base64 = base64.b64encode(pdf_content).decode('utf-8')
+                if not os.path.exists(pdf_path):
+                    return Response({
+                        "status": "error",
+                        "message": "PDF generation failed"
+                    }, status=status.HTTP_400_BAD_REQUEST)
                 
-                # Clean up the temporary file
-                os.remove(pdf_path)
+                # Open the file and create a FileResponse
+                pdf_file = open(pdf_path, 'rb')
+                response = FileResponse(
+                    pdf_file,
+                    content_type='application/pdf',
+                    as_attachment=True,
+                    filename=os.path.basename(pdf_path)
+                )
                 
-                # Return the base64 encoded PDF with metadata
-                return Response({
-                    "status": "success",
-                    "data": {
-                        "pdf_content": pdf_base64,
-                        "filename": f"slideshare_{url.split('/')[-1]}.pdf",
-                        "content_type": "application/pdf"
-                    }
-                }, status=status.HTTP_200_OK)
+                # Add header to force download
+                response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
+                
+                # File will be deleted after response is sent
+                def delete_file_after_response():
+                    pdf_file.close()
+                    if os.path.exists(pdf_path):
+                        os.remove(pdf_path)
+                
+                response.close = delete_file_after_response
+                
+                return response
                 
             except Exception as e:
                 return Response({
