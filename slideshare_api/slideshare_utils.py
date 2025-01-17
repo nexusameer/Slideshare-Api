@@ -7,6 +7,9 @@ from bs4 import BeautifulSoup
 import img2pdf
 from time import localtime, strftime
 from os import walk
+from django.http import HttpResponse
+import os
+
 from os.path import join
 
 CURRENT = os.path.dirname(__file__)
@@ -82,6 +85,7 @@ def convert_pdf(img_dir_name, pdf_f):
 
     # Delete images after conversion
     delete_images(img_dir_name)
+    download_pdf(pdf_path)
     return pdf_path
 
 
@@ -96,3 +100,30 @@ def delete_images(img_dir_name):
         break
     os.rmdir(img_dir_name)  # Remove the empty directory
     print(f"Deleted the directory: {img_dir_name}")
+
+
+def download_pdf(request):
+    # Get the URL from the request
+    url = request.GET.get("url")
+    if not url:
+        return HttpResponse("URL parameter is missing.", status=400)
+
+    try:
+        # Generate the PDF from images (implement download_images function as per your needs)
+        pdf_path = download_images(url)
+
+        # Ensure the file exists before serving
+        if os.path.exists(pdf_path):
+            # Open the file in binary mode and serve it
+            with open(pdf_path, 'rb') as pdf_file:
+                response = HttpResponse(pdf_file.read(), content_type='application/pdf')
+                response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
+            
+            # Clean up the generated file after serving
+            os.remove(pdf_path)
+            return response
+        else:
+            return HttpResponse("Generated PDF file not found.", status=404)
+
+    except Exception as e:
+        return HttpResponse(f"Error occurred: {e}", status=500)
