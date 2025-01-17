@@ -51,7 +51,9 @@ def download_images(url):
         with open(title + "/" + filename, "wb") as f:
             f.write(r.content)
 
-    convert_pdf(title, pdf_f)
+    # Convert images to PDF
+    pdf_path = convert_pdf(title, pdf_f)
+    return pdf_path
 
 def convert_pdf(img_dir_name, pdf_f):
     f = []
@@ -71,15 +73,17 @@ def convert_pdf(img_dir_name, pdf_f):
     print("\n2. Convert Images to PDF")
     print(f)
 
+    pdf_path = join(CURRENT, pdf_f)
     pdf_bytes = img2pdf.convert(f, dpi=300, x=None, y=None)
-    doc = open(pdf_f, "wb")
-    doc.write(pdf_bytes)
-    doc.close()
+    with open(pdf_path, "wb") as doc:
+        doc.write(pdf_bytes)
 
-    print(f"\n3. Done: {pdf_f}")
+    print(f"\n3. Done: {pdf_path}")
 
     # Delete images after conversion
     delete_images(img_dir_name)
+    return pdf_path
+
 
 def delete_images(img_dir_name):
     # Delete all files in the directory after conversion to PDF
