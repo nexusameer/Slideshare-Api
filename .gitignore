@@ -1,0 +1,5 @@
+db.sqlite3
+
+__pycache__
+
+slideshare_api/migrations/__pycache__

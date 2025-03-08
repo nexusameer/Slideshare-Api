@@ -1,125 +1,178 @@
-# slideshare_api/slideshare_utils.py
-
 import os
-import re
-import requests 
+import requests
 from bs4 import BeautifulSoup
-import img2pdf
-from time import localtime, strftime
-from os import walk
-from django.http import HttpResponse
-import os
-
-from os.path import join
-
-CURRENT = os.path.dirname(__file__)
-
-def download_images(url):
-    html = requests.get(url).content
-    soup = BeautifulSoup(html, "html.parser")
-    
-    title = "".join(
-        (CURRENT + "/pdf_images", strftime("/%Y%m%d_%H%M%S", localtime()))
-    )  # temp img dir
-
-    images = soup.find_all("img", {"data-testid": "vertical-slide-image"})
-    image_url = ""
-
-    for image in images:
-        image_url = image.get("srcset").split("w, ")[-1].split(" ")[0]
-        if image_url.endswith(".jpg"):
-            break
-
-    i = 1
-    image_url_prefix = image_url.rstrip("-2048.jpg")
-    image_url_prefix = image_url_prefix.rstrip("0123456789")  # remove last slide id
-    image_url_prefix = image_url_prefix.rstrip("-")  # remove last -
-    pdf_f = re.sub(
-        "[^0-9a-zA-Z]+", "_", image_url_prefix.split("/")[-1]
-    )  # Get pdf name from URL image
-    pdf_f += ".pdf"
-    
-    print("1. Download Images:")
-    for image in images:
-        image_url = image_url_prefix + "-" + str(i) + "-2048.jpg"
-        print(f"Downloading {image_url}")
-        r = requests.get(image_url)
-
-        if not os.path.exists(title):
-            os.makedirs(title)
-
-        filename = str(i) + ".jpg"
-        i += 1
-
-        with open(title + "/" + filename, "wb") as f:
-            f.write(r.content)
-
-    # Convert images to PDF
-    pdf_path = convert_pdf(title, pdf_f)
-    return pdf_path
-
-def convert_pdf(img_dir_name, pdf_f):
-    f = []
-    for dirpath, dirnames, filenames in walk(join(CURRENT, img_dir_name)):
-        f.extend(filenames)
-        break
-    f = ["%s/%s" % (img_dir_name, x) for x in f]
-
-    def atoi(text):
-        return int(text) if text.isdigit() else text
-
-    def natural_keys(text):
-        return [atoi(c) for c in re.split(r"(\d+)", text)]
-
-    f.sort(key=natural_keys)
-
-    print("\n2. Convert Images to PDF")
-    print(f)
-
-    pdf_path = join(CURRENT, pdf_f)
-    pdf_bytes = img2pdf.convert(f, dpi=300, x=None, y=None)
-    with open(pdf_path, "wb") as doc:
-        doc.write(pdf_bytes)
-
-    print(f"\n3. Done: {pdf_path}")
-    return pdf_path
+from fpdf import FPDF
+from pptx import Presentation
+from PIL import Image
+import zipfile
+from docx.shared import Inches
+from docx import Document
 
 
-def delete_images(img_dir_name):
-    # Delete all files in the directory after conversion to PDF
-    for dirpath, dirnames, filenames in walk(join(CURRENT, img_dir_name)):
-        for filename in filenames:
-            file_path = os.path.join(dirpath, filename)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-                print(f"Deleted: {file_path}")
-        break
-    os.rmdir(img_dir_name)  # Remove the empty directory
-    print(f"Deleted the directory: {img_dir_name}")
-
-
-def download_pdf(request):
-    # Get the URL from the request
-    url = request.GET.get("url")
-    if not url:
-        return HttpResponse("URL parameter is missing.", status=400)
-
+def fetch_image_urls(slideshare_url):
+    """
+    Fetches image URLs from a SlideShare URL.
+    """
     try:
-        # Generate the PDF from images
-        pdf_path = download_images(url)
-
-        # Ensure the file exists before serving
-        if not os.path.exists(pdf_path):
-            return HttpResponse("Generated PDF file not found.", status=404)
-
-        # Serve the PDF
-        with open(pdf_path, 'rb') as pdf_file:
-            response = HttpResponse(pdf_file.read(), content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{os.path.basename(pdf_path)}"'
+        html = requests.get(slideshare_url).content
+        soup = BeautifulSoup(html, "html.parser")
         
-        # Cleanup after serving the response
-        os.remove(pdf_path)
-        return response
+        images = soup.find_all("img", {"data-testid": "vertical-slide-image"})
+        image_urls = []
+
+        for image in images:
+            image_url = image.get("srcset").split("w, ")[-1].split(" ")[0]
+            if image_url.endswith((".jpg", ".jpeg", ".png", ".webp")):
+                image_urls.append(image_url)
+
+        return image_urls
 
     except Exception as e:
-        return HttpResponse(f"Error occurred: {e}", status=500)
+        raise Exception(f"Failed to fetch image URLs: {e}")
+
+
+def download_images(image_urls):
+    """
+    Downloads images from a list of URLs and returns their paths.
+    """
+    try:
+        image_paths = []
+        for index, image_url in enumerate(image_urls):
+            response = requests.get(image_url, timeout=10)
+            response.raise_for_status()
+
+            # Determine the file extension from the URL or content type
+            if image_url.lower().endswith(".webp"):
+                ext = ".webp"
+            elif image_url.lower().endswith(".png"):
+                ext = ".png"
+            else:
+                ext = ".jpg"  # Default to JPEG
+
+            image_path = f"temp_image_{index}{ext}"
+            with open(image_path, "wb") as f:
+                f.write(response.content)
+            image_paths.append(image_path)
+
+        return image_paths
+
+    except Exception as e:
+        raise Exception(f"Failed to download images: {e}")
+
+
+def convert_to_jpeg(image_path):
+    """
+    Converts an image to JPEG format if it's not already in JPEG.
+    Returns the path of the converted JPEG file.
+    """
+    try:
+        with Image.open(image_path) as img:
+            if img.format != "JPEG":
+                jpeg_path = f"{os.path.splitext(image_path)[0]}.jpg"
+                img.convert("RGB").save(jpeg_path, "JPEG")
+                return jpeg_path
+            return image_path
+    except Exception as e:
+        raise Exception(f"Failed to convert image to JPEG: {e}")
+
+
+def convert_images_to_pdf(image_paths):
+    """
+    Converts a list of image paths to a PDF.
+    """
+    try:
+        pdf = FPDF()
+        for image_path in image_paths:
+            # Convert to JPEG if necessary
+            jpeg_path = convert_to_jpeg(image_path)
+
+            # Add the image to the PDF
+            pdf.add_page()
+            pdf.image(jpeg_path, x=10, y=10, w=190)
+
+            # Cleanup the temporary JPEG file (if it was created)
+            if jpeg_path != image_path:
+                os.remove(jpeg_path)
+
+            # Cleanup the original image file
+            os.remove(image_path)
+
+        pdf_path = "output.pdf"
+        pdf.output(pdf_path)
+        return pdf_path
+
+    except Exception as e:
+        raise Exception(f"Failed to convert images to PDF: {e}")
+
+
+def convert_images_to_ppt(image_paths):
+    """
+    Converts a list of image paths to a PPT.
+    """
+    try:
+        prs = Presentation()
+        for image_path in image_paths:
+            # Convert to JPEG if necessary
+            jpeg_path = convert_to_jpeg(image_path)
+
+            # Add the image to the PPT
+            slide = prs.slides.add_slide(prs.slide_layouts[5])  # Blank slide layout
+            slide.shapes.add_picture(jpeg_path, 0, 0, width=prs.slide_width)
+
+            # Cleanup the temporary JPEG file (if it was created)
+            if jpeg_path != image_path:
+                os.remove(jpeg_path)
+
+            # Cleanup the original image file
+            os.remove(image_path)
+
+        ppt_path = "output.pptx"
+        prs.save(ppt_path)
+        return ppt_path
+
+    except Exception as e:
+        raise Exception(f"Failed to convert images to PPT: {e}")
+
+
+def convert_images_to_word(image_paths):
+    """
+    Converts a list of image paths to a Word document.
+    """
+    try:
+        doc = Document()
+        for image_path in image_paths:
+            # Convert to JPEG if necessary
+            jpeg_path = convert_to_jpeg(image_path)
+
+            # Add the image to the Word document
+            doc.add_picture(jpeg_path, width=Inches(6))
+
+            # Cleanup the temporary JPEG file (if it was created)
+            if jpeg_path != image_path:
+                os.remove(jpeg_path)
+
+            # Cleanup the original image file
+            os.remove(image_path)
+
+        doc_path = "output.docx"
+        doc.save(doc_path)
+        return doc_path
+
+    except Exception as e:
+        raise Exception(f"Failed to convert images to Word: {e}")
+
+
+def compress_file(file_path):
+    """
+    Compresses a file (PDF, PPT, or Word) into a ZIP archive.
+    """
+    try:
+        zip_path = f"{file_path}.zip"
+        with zipfile.ZipFile(zip_path, 'w') as zipf:
+            zipf.write(file_path, os.path.basename(file_path))
+
+        os.remove(file_path)  # Cleanup
+        return zip_path
+
+    except Exception as e:
+        raise Exception(f"Failed to compress file: {e}")
