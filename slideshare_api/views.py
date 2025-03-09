@@ -135,30 +135,33 @@ class DownloadCompressedPDFView(APIView):
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# ================== Fixed Compressed Views ==================
 class DownloadCompressedPPTView(APIView):
     def post(self, request):
         image_urls = request.data.get("image_urls", [])
         if not image_urls:
-            return Response({"error": "No image URLs provided."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "No image URLs provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Generate PPT and ZIP
+            # 1. Generate PPT
             image_paths = download_images(image_urls)
             ppt_path = convert_images_to_ppt(image_paths)
-            zip_path = compress_file(ppt_path)  # Ensure this zips the PPT file
+            
+            # 2. Validate PPT
+            if not os.path.exists(ppt_path) or os.path.getsize(ppt_path) == 0:
+                return Response({"error": "PPT generation failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # Verify files exist before serving
-            if not os.path.exists(zip_path):
-                return Response({"error": "Compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # 3. Compress
+            zip_path = compress_file(ppt_path)
+            if not zip_path:
+                return Response({"error": "PPT compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # Stream ZIP file with cleanup
-            file_handle = open(zip_path, 'rb')
-            response = CleanupHttpResponse(
-                file_handle.read(),
-                content_type='application/zip',
-                file_paths=[ppt_path, zip_path]
-            )
+            # 4. Serve with cleanup
+            with open(zip_path, 'rb') as f:
+                response = CleanupHttpResponse(
+                    f.read(),
+                    content_type='application/zip',
+                    file_paths=[ppt_path, zip_path]
+                )
             response['Content-Disposition'] = 'attachment; filename="presentation.pptx.zip"'
             return response
 
@@ -169,25 +172,29 @@ class DownloadCompressedWordView(APIView):
     def post(self, request):
         image_urls = request.data.get("image_urls", [])
         if not image_urls:
-            return Response({"error": "No image URLs provided."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "No image URLs provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Generate DOCX and ZIP
+            # 1. Generate Word
             image_paths = download_images(image_urls)
             word_path = convert_images_to_word(image_paths)
-            zip_path = compress_file(word_path)  # Ensure this zips the DOCX file
+            
+            # 2. Validate Word
+            if not os.path.exists(word_path) or os.path.getsize(word_path) == 0:
+                return Response({"error": "Word generation failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # Verify files exist before serving
-            if not os.path.exists(zip_path):
-                return Response({"error": "Compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # 3. Compress
+            zip_path = compress_file(word_path)
+            if not zip_path:
+                return Response({"error": "Word compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # Stream ZIP file with cleanup
-            file_handle = open(zip_path, 'rb')
-            response = CleanupHttpResponse(
-                file_handle.read(),
-                content_type='application/zip',
-                file_paths=[word_path, zip_path]
-            )
+            # 4. Serve with cleanup
+            with open(zip_path, 'rb') as f:
+                response = CleanupHttpResponse(
+                    f.read(),
+                    content_type='application/zip',
+                    file_paths=[word_path, zip_path]
+                )
             response['Content-Disposition'] = 'attachment; filename="document.docx.zip"'
             return response
 
