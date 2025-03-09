@@ -7,7 +7,6 @@ from PIL import Image
 import zipfile
 from docx.shared import Inches
 from docx import Document
-import logging
 
 
 def fetch_image_urls(slideshare_url):
@@ -163,22 +162,17 @@ def convert_images_to_word(image_paths):
         raise Exception(f"Failed to convert images to Word: {e}")
 
 
-logger = logging.getLogger(__name__)
-
-def compress_file(source_path):
-    """Robust file compression with error handling"""
-    if not os.path.exists(source_path):
-        logger.error(f"File not found for compression: {source_path}")
-        return None
-
-    zip_path = f"{source_path}.zip"
-    
+def compress_file(file_path):
+    """
+    Compresses a file (PDF, PPT, or Word) into a ZIP archive.
+    """
     try:
-        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            zipf.write(source_path, arcname=os.path.basename(source_path))
+        zip_path = f"{file_path}.zip"
+        with zipfile.ZipFile(zip_path, 'w') as zipf:
+            zipf.write(file_path, os.path.basename(file_path))
+
+        os.remove(file_path)  # Cleanup
         return zip_path
+
     except Exception as e:
-        logger.error(f"Compression failed for {source_path}: {str(e)}")
-        if os.path.exists(zip_path):
-            os.remove(zip_path)
-        return None
+        raise Exception(f"Failed to compress file: {e}")
