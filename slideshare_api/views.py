@@ -150,7 +150,7 @@ class DownloadCompressedPPTView(APIView):
             if not os.path.exists(ppt_path) or os.path.getsize(ppt_path) == 0:
                 return Response({"error": "PPT generation failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # 3. Compress
+            # 3. Compress the PPT
             zip_path = compress_file(ppt_path)
             if not zip_path:
                 return Response({"error": "PPT compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -183,7 +183,7 @@ class DownloadCompressedWordView(APIView):
             if not os.path.exists(word_path) or os.path.getsize(word_path) == 0:
                 return Response({"error": "Word generation failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-            # 3. Compress
+            # 3. Compress the Word
             zip_path = compress_file(word_path)
             if not zip_path:
                 return Response({"error": "Word compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
