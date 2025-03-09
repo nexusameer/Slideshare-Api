@@ -139,31 +139,22 @@ class DownloadCompressedPPTView(APIView):
     def post(self, request):
         image_urls = request.data.get("image_urls", [])
         if not image_urls:
-            return Response({"error": "No image URLs provided"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "No image URLs provided."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # 1. Generate PPT
             image_paths = download_images(image_urls)
             ppt_path = convert_images_to_ppt(image_paths)
             
-            # 2. Validate PPT
-            if not os.path.exists(ppt_path) or os.path.getsize(ppt_path) == 0:
-                return Response({"error": "PPT generation failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            # 3. Compress the PPT
-            zip_path = compress_file(ppt_path)
-            if not zip_path:
-                return Response({"error": "PPT compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            # 4. Serve with cleanup
-            with open(zip_path, 'rb') as f:
-                response = CleanupHttpResponse(
-                    f.read(),
-                    content_type='application/zip',
-                    file_paths=[ppt_path, zip_path]
-                )
-            response['Content-Disposition'] = 'attachment; filename="presentation.pptx.zip"'
+            file_handle = open(ppt_path, 'rb')
+            response = CleanupFileResponse(
+                file_handle,
+                content_type='application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                file_path=ppt_path
+            )
+            response['Content-Disposition'] = 'attachment; filename="slideshare.pptx"'
             return response
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -172,31 +163,19 @@ class DownloadCompressedWordView(APIView):
     def post(self, request):
         image_urls = request.data.get("image_urls", [])
         if not image_urls:
-            return Response({"error": "No image URLs provided"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "No image URLs provided."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # 1. Generate Word
             image_paths = download_images(image_urls)
             word_path = convert_images_to_word(image_paths)
             
-            # 2. Validate Word
-            if not os.path.exists(word_path) or os.path.getsize(word_path) == 0:
-                return Response({"error": "Word generation failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            # 3. Compress the Word
-            zip_path = compress_file(word_path)
-            if not zip_path:
-                return Response({"error": "Word compression failed"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-            # 4. Serve with cleanup
-            with open(zip_path, 'rb') as f:
-                response = CleanupHttpResponse(
-                    f.read(),
-                    content_type='application/zip',
-                    file_paths=[word_path, zip_path]
-                )
-            response['Content-Disposition'] = 'attachment; filename="document.docx.zip"'
+            file_handle = open(word_path, 'rb')
+            response = CleanupFileResponse(
+                file_handle,
+                content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                file_path=word_path
+            )
+            response['Content-Disposition'] = 'attachment; filename="slideshare.docx"'
             return response
-
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
