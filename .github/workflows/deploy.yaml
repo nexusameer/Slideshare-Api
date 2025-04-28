@@ -3,7 +3,7 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # Trigger the workflow when there's a push to the main branch
+      - main  # Trigger the workflow when code is pushed to main branch
 
 jobs:
   deploy:
@@ -11,36 +11,29 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Checkout the repository's code
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12.7'  # Specify the Python version if necessary
+        python-version: '3.12.7'
 
     - name: Install dependencies
       run: |
         python -m venv venv
         source venv/bin/activate
-        pip install -r requirements.txt  # Install the dependencies
+        pip install -r requirements.txt
 
-    - name: Setup SSH Key and Test Variables
+    - name: Setup SSH Key
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-        ls -la
-        echo "PRIVATE KEY CONTENT:"
-        cat private_key.pem
-        echo "SERVER IP:"
-        echo "$SERVER_IP"
-        echo "SERVER USER:"
-        echo "$SERVER_USER"
-
-
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Deploy over SSH
       run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "bash -s" << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i private_key.pem "$SERVER_USER@$SERVER_IP" "bash -s" << 'EOF'
           cd /root/Api-pdf-Downloader-
           git pull origin main
           source venv/bin/activate
@@ -48,6 +41,6 @@ jobs:
           sudo systemctl restart gunicorn
           sudo systemctl restart nginx
         EOF
-
-
-
+      env:
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        SERVER_IP: ${{ secrets.SERVER_IP }}
