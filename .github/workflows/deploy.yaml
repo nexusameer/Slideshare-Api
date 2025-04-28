@@ -28,7 +28,9 @@ jobs:
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-        ls private_key.pem
+        cat private_key.pem
+        cat "$SERVER_IP"
+        cat "SERVER_USER"
 
     # - name: Deploy over SSH
     #   run: |
