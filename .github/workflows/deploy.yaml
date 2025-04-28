@@ -23,9 +23,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Fix SSH key permissions
+    # - name: Fix SSH key permissions
+    #   run: |
+    #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+    #     chmod 600 private_key.pem
+    #     ssh-keygen -p -m PEM -N "" -f private_key.pem
+    
+    - name: Fix key permissions
       run: |
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+        echo "${{ secrets.YOUR_SECRET }}" > private_key.pem
         chmod 600 private_key.pem
         ssh-keygen -p -m PEM -N "" -f private_key.pem
 
