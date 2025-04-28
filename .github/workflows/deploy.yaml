@@ -29,9 +29,9 @@ jobs:
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
 
-    - name: Deploy using SSH
+    - name: Deploy over SSH
       run: |
-        ssh -o StrictHostKeyChecking=no -i private_key.pem $SERVER_USER@$SERVER_IP << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i private_key.pem $SERVER_USER@$SERVER_IP "bash -s" << 'EOF'
           cd /root/Api-pdf-Downloader-
           git pull origin main
           source venv/bin/activate
@@ -39,5 +39,6 @@ jobs:
           sudo systemctl restart gunicorn
           sudo systemctl restart nginx
         EOF
+
 
 
