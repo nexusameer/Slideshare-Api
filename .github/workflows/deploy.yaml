@@ -35,6 +35,7 @@ jobs:
         echo "$SERVER_IP"
         echo "SERVER USER:"
         echo "$SERVER_USER"
+        
 
 
     # - name: Deploy over SSH
