@@ -35,19 +35,19 @@ jobs:
         echo "$SERVER_IP"
         echo "SERVER USER:"
         echo "$SERVER_USER"
-        
 
 
-    # - name: Deploy over SSH
-    #   run: |
-    #     ssh -o StrictHostKeyChecking=no -i private_key.pem $SERVER_USER@$SERVER_IP "bash -s" << 'EOF'
-    #       cd /root/Api-pdf-Downloader-
-    #       git pull origin main
-    #       source venv/bin/activate
-    #       pip install -r requirements.txt
-    #       sudo systemctl restart gunicorn
-    #       sudo systemctl restart nginx
-    #     EOF
+
+    - name: Deploy over SSH
+      run: |
+        ssh -o StrictHostKeyChecking=no -i private_key.pem $SERVER_USER@$SERVER_IP "bash -s" << 'EOF'
+          cd /root/Api-pdf-Downloader-
+          git pull origin main
+          source venv/bin/activate
+          pip install -r requirements.txt
+          sudo systemctl restart gunicorn
+          sudo systemctl restart nginx
+        EOF
 
 
 
