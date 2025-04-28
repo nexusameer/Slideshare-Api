@@ -17,8 +17,12 @@ Including another URLconf
 # slideshare_project/urls.py
 from django.contrib import admin
 from django.urls import path, include
+from django.http import HttpResponse
+def home(request):
+    return HttpResponse("<h1>Welcome to SlideShare API Downloader!</h1>")
 
 urlpatterns = [
+    path('', home),
     path('admin/', admin.site.urls),
     path('api/slideshare/', include('slideshare_api.urls')),  # Include the slideshare API urls
 ]
