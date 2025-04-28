@@ -31,7 +31,7 @@ jobs:
     
     - name: Fix key permissions
       run: |
-        echo "${{ secrets.YOUR_SECRET }}" > private_key.pem
+        echo "${{ secrets.SSH_PUBLIC_KEY }}" > private_key.pem
         chmod 600 private_key.pem
         ssh-keygen -p -m PEM -N "" -f private_key.pem
 
