@@ -24,14 +24,18 @@ jobs:
         source venv/bin/activate
         pip install -r requirements.txt  # Install the dependencies
 
-    - name: Setup SSH Key
+    - name: Setup SSH Key and Test Variables
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-        ls
+        ls -la
+        echo "PRIVATE KEY CONTENT:"
         cat private_key.pem
-        cat "$SERVER_IP"
-        cat "SERVER_USER"
+        echo "SERVER IP:"
+        echo "$SERVER_IP"
+        echo "SERVER USER:"
+        echo "$SERVER_USER"
+
 
     # - name: Deploy over SSH
     #   run: |
