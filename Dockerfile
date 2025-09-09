@@ -10,8 +10,8 @@ WORKDIR /app
 
 # Install only essential system dependencies
 
-# Install build tools for pip packages
-RUN apt-get update && apt-get install -y --no-install-recommends gcc
+# Install build tools and Python headers for pip packages
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential python3.9-dev
 
 # Install Python dependencies
 COPY requirements.txt .
