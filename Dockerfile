@@ -9,14 +9,17 @@ ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # Install only essential system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+
+# Install build tools for pip packages
+RUN apt-get update && apt-get install -y --no-install-recommends gcc
 
 # Install Python dependencies
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Clean up build tools and apt cache after pip install
+RUN apt-get remove -y gcc && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy project files
 COPY . .
