@@ -6,6 +6,103 @@
     <title>10fw Aimers - SlideShare API</title>
 </head>
 <body>
-
+</body>
+    <div style="max-width:600px;margin:auto;">
+        <input type="text" id="slideshareUrl" placeholder="Paste SlideShare PPT URL here" style="width:80%;padding:8px;">
+        <div style="margin:16px 0;">
+            <button onclick="downloadImages()">Download Images</button>
+            <button onclick="downloadPDF()">Download PDF</button>
+            <button onclick="downloadPPT()">Download PPT</button>
+            <button onclick="downloadWord()">Download Word</button>
+            <button onclick="downloadCompressedPDF()">Download Compressed PDF</button>
+            <button onclick="downloadCompressedPPT()">Download Compressed PPT</button>
+            <button onclick="downloadCompressedWord()">Download Compressed Word</button>
+        </div>
+        <div id="imagesPreview" style="display:none;"></div>
+        <div id="errorMsg" style="color:red;"></div>
+    </div>
+    <script>
+    let lastImageUrls = [];
+    function setError(msg) {
+        document.getElementById('errorMsg').innerText = msg || '';
+    }
+    function showImages(urls) {
+        const preview = document.getElementById('imagesPreview');
+        preview.innerHTML = '';
+        if (urls.length === 0) {
+            preview.style.display = 'none';
+            return;
+        }
+        preview.style.display = 'block';
+        urls.forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            img.style.maxWidth = '100%';
+            img.style.margin = '8px 0';
+            preview.appendChild(img);
+        });
+    }
+    async function downloadImages() {
+        setError('');
+        showImages([]);
+        const url = document.getElementById('slideshareUrl').value.trim();
+        if (!url) { setError('Please enter a SlideShare URL.'); return; }
+        try {
+            const res = await fetch('/download-images/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Failed to fetch images.');
+            lastImageUrls = data.image_urls;
+            showImages(lastImageUrls);
+        } catch (e) {
+            setError(e.message);
+        }
+    }
+    async function downloadFile(apiPath, filename) {
+        setError('');
+        if (!lastImageUrls.length) { setError('Please download images first.'); return; }
+        try {
+            const res = await fetch(apiPath, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image_urls: lastImageUrls })
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Download failed.');
+            }
+            const blob = await res.blob();
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (e) {
+            setError(e.message);
+        }
+    }
+    function downloadPDF() {
+    downloadFile('/download-pdf/', 'slideshare.pdf');
+    }
+    function downloadPPT() {
+    downloadFile('/download-ppt/', 'slideshare.pptx');
+    }
+    function downloadWord() {
+    downloadFile('/download-word/', 'slideshare.docx');
+    }
+    function downloadCompressedPDF() {
+    downloadFile('/download-compressed-pdf/', 'slideshare_compressed.pdf');
+    }
+    function downloadCompressedPPT() {
+    downloadFile('/download-compressed-ppt/', 'slideshare_compressed.pptx');
+    }
+    function downloadCompressedWord() {
+    downloadFile('/download-compressed-word/', 'slideshare_compressed.docx');
+    }
+    </script>
 </body>
 </html>
