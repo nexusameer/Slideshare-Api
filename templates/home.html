@@ -88,7 +88,7 @@
         const url = document.getElementById('slideshareUrl').value.trim();
         if (!url) { setError('Please enter a SlideShare URL.'); return; }
         try {
-            const res = await fetch('/download-images/', {
+            const res = await fetch('/api/slideshare/download-images/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })
