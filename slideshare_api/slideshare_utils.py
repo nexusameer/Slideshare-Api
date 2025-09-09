@@ -1,3 +1,4 @@
+
 import os
 import requests
 from bs4 import BeautifulSoup
@@ -7,6 +8,8 @@ from PIL import Image
 import zipfile
 from docx.shared import Inches
 from docx import Document
+from io import BytesIO
+import concurrent.futures
 
 
 def fetch_image_urls(slideshare_url):
@@ -35,27 +38,33 @@ def download_images(image_urls):
     """
     Downloads images from a list of URLs and returns their paths.
     """
-    try:
-        image_paths = []
-        for index, image_url in enumerate(image_urls):
+    def fetch_and_compress(args):
+        index, image_url = args
+        try:
             response = requests.get(image_url, timeout=10)
             response.raise_for_status()
+            # Use BytesIO for in-memory processing
+            img_bytes = BytesIO(response.content)
+            with Image.open(img_bytes) as img:
+                # Resize if too large (e.g., max width 800px)
+                max_width = 800
+                if img.width > max_width:
+                    ratio = max_width / img.width
+                    new_size = (max_width, int(img.height * ratio))
+                    img = img.resize(new_size, Image.LANCZOS)
+                # Always save as JPEG, quality 55 (smaller size, still readable)
+                out_path = f"temp_image_{index}.jpg"
+                img.convert("RGB").save(out_path, "JPEG", quality=55, optimize=True, progressive=True)
+            return out_path
+        except Exception as e:
+            raise Exception(f"Failed to download or process image {image_url}: {e}")
 
-            # Determine the file extension from the URL or content type
-            if image_url.lower().endswith(".webp"):
-                ext = ".webp"
-            elif image_url.lower().endswith(".png"):
-                ext = ".png"
-            else:
-                ext = ".jpg"  # Default to JPEG
-
-            image_path = f"temp_image_{index}{ext}"
-            with open(image_path, "wb") as f:
-                f.write(response.content)
-            image_paths.append(image_path)
-
+    try:
+        image_paths = []
+        with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
+            results = list(executor.map(fetch_and_compress, enumerate(image_urls)))
+        image_paths.extend(results)
         return image_paths
-
     except Exception as e:
         raise Exception(f"Failed to download images: {e}")
 
