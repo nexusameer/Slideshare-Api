@@ -26,5 +26,5 @@ def home(request):
 urlpatterns = [
     path('', home),
     path('admin/', admin.site.urls),
-    path('', include('slideshare_api.urls')),  # Expose slideshare_api endpoints at root
+    path('api/slideshare/', include('slideshare_api.urls')),  # Expose slideshare_api endpoints at root
 ]
