@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SlideShare Downloader | Download Slides Instantly</title>
     <meta name="description" content="Easily download SlideShare presentations as images, PDF, PPT, or Word. Fast, free, and user-friendly.">
     <meta name="keywords" content="slides, download, share, presentations, ppt, pdf, word, SlideShare, free, fast">
@@ -91,15 +91,15 @@
                 <p class="lead">Paste your SlideShare link, select your format, and download instantly. No registration required!</p>
                 <div class="row justify-content-center mt-4">
                     <div class="col-6 col-md-2">
-                        <img src="{% static 'images/link.svg' %}" alt="Paste Link icon" class="img-fluid mb-2" width="48" height="48" loading="lazy">
+                        <img src="{% static 'images/link.svg' %}" alt="Paste Link icon" class="img-fluid mb-2" width="48" height="48" style="width:48px;height:48px;" loading="lazy">
                         <div>Paste Link</div>
                     </div>
                     <div class="col-6 col-md-2">
-                        <img src="{% static 'images/choose.svg' %}" alt="Choose Format icon" class="img-fluid mb-2" width="48" height="48" loading="lazy">
+                        <img src="{% static 'images/choose.svg' %}" alt="Choose Format icon" class="img-fluid mb-2" width="48" height="48" style="width:48px;height:48px;" loading="lazy">
                         <div>Choose Format</div>
                     </div>
                     <div class="col-6 col-md-2">
-                        <img src="{% static 'images/download.svg' %}" alt="Download icon" class="img-fluid mb-2" width="48" height="48" loading="lazy">
+                        <img src="{% static 'images/download.svg' %}" alt="Download icon" class="img-fluid mb-2" width="48" height="48" style="width:48px;height:48px;" loading="lazy">
                         <div>Download</div>
                     </div>
                 </div>
@@ -150,4 +150,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" async crossorigin></script>
     <script src="{% static 'js/home.js' %}" defer></script>
 </body>
-</html>
+    <style>
+        .custom-loader-bg {position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;}
+        .custom-loader {border:6px solid #f3f3f3;border-top:6px solid #007bff;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;}
+        @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+        .custom-loader-text {margin-top:1rem;text-align:center;font-size:1.1rem;color:#333;}
+        /* Accessibility: improve contrast for buttons and text */
+        .btn-primary, .btn-primary:focus, .btn-primary:active {background-color:#0056b3 !important; border-color:#0056b3 !important; color:#fff !important;}
+        .btn-success, .btn-success:focus, .btn-success:active {background-color:#218838 !important; border-color:#218838 !important; color:#fff !important;}
+        .btn-warning, .btn-warning:focus, .btn-warning:active {background-color:#ff9800 !important; border-color:#ff9800 !important; color:#212529 !important;}
+        .btn-info, .btn-info:focus, .btn-info:active {background-color:#17a2b8 !important; border-color:#17a2b8 !important; color:#fff !important;}
+        .btn-outline-primary, .btn-outline-primary:focus, .btn-outline-primary:active {color:#0056b3 !important; border-color:#0056b3 !important;}
+        .btn-outline-warning, .btn-outline-warning:focus, .btn-outline-warning:active {color:#ff9800 !important; border-color:#ff9800 !important;}
+        .btn-outline-info, .btn-outline-info:focus, .btn-outline-info:active {color:#17a2b8 !important; border-color:#17a2b8 !important;}
+        @media (max-width: 600px) {
+            h1, h2, h3, .navbar-brand {font-size:1.2rem !important;}
+            .form-control-lg {font-size:1rem;}
+            .btn-lg {font-size:1rem;padding:.5rem 1.2rem;}
+            .card {padding:1.2rem !important;}
+        }
+    </style>
