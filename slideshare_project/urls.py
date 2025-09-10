@@ -26,5 +26,5 @@ def home(request):
 urlpatterns = [
     path('', home),
     path('admin/', admin.site.urls),
-    path('api/slideshare/', include('slideshare_api.urls')),  # Include the slideshare API urls
+    path('api/slideshare/', include('slideshare_api.urls')), 
 ]
