@@ -1,5 +1,8 @@
 cat deploy.sh 
 #!/bin/bash
+set -e
+set -x
+trap 'echo "Error on line $LINENO"; exit 1' ERR
 
 echo "=== Slideshare Deployment Script ==="
 echo "Starting deployment process..."

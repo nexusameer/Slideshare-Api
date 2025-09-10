@@ -34,12 +34,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: SSH and run deploy_slideshare.sh
-      uses: appleboy/ssh-action@v1.0.0
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: root
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /root
-          ./deploy_slideshare.sh
+      - name: SSH connection test
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: echo "SSH connection successful"
+
+      - name: Run deploy_slideshare.sh
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /root
+            bash -x ./deploy_slideshare.sh > deploy_slideshare.log 2>&1
+
+      - name: Print deploy log on failure
+        if: failure()
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: tail -n 50 /root/deploy_slideshare.log || true
