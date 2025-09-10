@@ -50,7 +50,7 @@ cleanup_old_images() {
     fi
 
     # Keep only the latest 2 versions of nexusameer/slideshare (any tag)
-    old_slideshare_images=$(docker images nexusameer/slideshare --format "{{.ID}}" | tail -n +3)
+                old_slideshare_images=$(docker images nexusameer/slideshare:latest --format "{{.ID}}" | tail -n +3)
     if [ -n "$old_slideshare_images" ]; then
         echo "Removing old slideshare images..."
         docker rmi $old_slideshare_images 2>/dev/null || true
@@ -76,21 +76,21 @@ main() {
     # Cleanup existing containers
     cleanup_port_8000
     
-    # Pull optimized image
-    echo "Pulling optimized image..."
-    docker pull nexusameer/slideshare:optimized
+                # Pull latest image
+                echo "Pulling latest image..."
+                docker pull nexusameer/slideshare:latest
 
     if [ $? -ne 0 ]; then
-        echo "❌ Failed to pull optimized image"
+                        echo "❌ Failed to pull latest image"
         exit 1
     fi
-    echo "✅ Optimized image pulled successfully"
+                echo "✅ Latest image pulled successfully"
 
     # Run the new container
     echo "Starting new container..."
-    docker run -d --restart always -p 8000:8000 \
-      --name slideshare \
-      nexusameer/slideshare:optimized
+                docker run -d --restart always -p 8000:8000 \
+                    --name slideshare \
+                    nexusameer/slideshare:latest
     
     if [ $? -eq 0 ]; then
         echo "✅ Container started successfully"
