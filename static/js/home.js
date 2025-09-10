@@ -49,7 +49,9 @@ async function downloadImages() {
     setError('');
     showImages([]);
     const url = document.getElementById('slideshareUrl').value.trim();
-    if (!url) { setError('Please enter a SlideShare URL.'); return; }
+    const loader = document.getElementById('customLoader');
+    loader.style.display = 'flex';
+    if (!url) { setError('Please enter a SlideShare URL.'); loader.style.display = 'none'; return; }
     try {
         const res = await fetch('/api/slideshare/download-images/', {
             method: 'POST',
@@ -62,6 +64,8 @@ async function downloadImages() {
         showImages(lastImageUrls);
     } catch (e) {
         setError(e.message);
+    } finally {
+        loader.style.display = 'none';
     }
 }
 function getSelectedImages() {
@@ -73,6 +77,8 @@ async function downloadFile(apiPath, filename) {
     if (!lastImageUrls.length) { setError('Please download images first.'); return; }
     const selectedImages = getSelectedImages();
     if (!selectedImages.length) { setError('Please select at least one image.'); return; }
+    const loader = document.getElementById('customLoader');
+    loader.style.display = 'flex';
     try {
         const res = await fetch(apiPath, {
             method: 'POST',
@@ -92,6 +98,8 @@ async function downloadFile(apiPath, filename) {
         document.body.removeChild(link);
     } catch (e) {
         setError(e.message);
+    } finally {
+        loader.style.display = 'none';
     }
 }
 function downloadPDF() {
