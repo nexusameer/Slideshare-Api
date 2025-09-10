@@ -45,22 +45,22 @@
         <link rel="stylesheet" href="{% static 'css/home.css' %}" media="print" onload="this.media='all'">
         <link rel="stylesheet" href="{% static 'css/loader.css' %}" media="print" onload="this.media='all'">
 </head>
-<body>
+<body style="min-height:100vh;display:flex;flex-direction:column;">
     <div id="customLoader" class="custom-loader-bg" style="display:none;">
         <div>
             <div class="custom-loader mx-auto"></div>
             <div class="custom-loader-text">Preparing your file, please wait...</div>
         </div>
     </div>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <header style="flex:0 0 auto;min-height:64px;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom" style="min-height:64px;">
             <div class="container">
-                <a class="navbar-brand fw-bold text-primary" href="#">SlideShare Downloader</a>
+                <a class="navbar-brand fw-bold text-primary" href="#" style="font-size:1.5rem;">SlideShare Downloader</a>
             </div>
         </nav>
     </header>
 
-    <main style="margin-bottom: 80px;">
+    <main style="flex:1 0 auto;min-height:calc(100vh - 144px);margin-bottom:0;">
         <!-- Download Section (Functionality) -->
         <section id="download-section" class="container mb-5">
             <div class="card shadow-sm p-4 mb-4">
@@ -91,15 +91,15 @@
                 <p class="lead">Paste your SlideShare link, select your format, and download instantly. No registration required!</p>
                 <div class="row justify-content-center mt-4">
                     <div class="col-6 col-md-2">
-                        <img src="{% static 'images/link.svg' %}" alt="Paste Link icon" class="img-fluid mb-2" width="48" height="48" style="width:48px;height:48px;" loading="lazy">
+                        <img src="{% static 'images/link.svg' %}" alt="Paste Link icon" class="mb-2" width="48" height="48" style="width:48px;height:48px;display:block;" loading="eager">
                         <div>Paste Link</div>
                     </div>
                     <div class="col-6 col-md-2">
-                        <img src="{% static 'images/choose.svg' %}" alt="Choose Format icon" class="img-fluid mb-2" width="48" height="48" style="width:48px;height:48px;" loading="lazy">
+                        <img src="{% static 'images/choose.svg' %}" alt="Choose Format icon" class="mb-2" width="48" height="48" style="width:48px;height:48px;display:block;" loading="eager">
                         <div>Choose Format</div>
                     </div>
                     <div class="col-6 col-md-2">
-                        <img src="{% static 'images/download.svg' %}" alt="Download icon" class="img-fluid mb-2" width="48" height="48" style="width:48px;height:48px;" loading="lazy">
+                        <img src="{% static 'images/download.svg' %}" alt="Download icon" class="mb-2" width="48" height="48" style="width:48px;height:48px;display:block;" loading="eager">
                         <div>Download</div>
                     </div>
                 </div>
@@ -138,8 +138,8 @@
 
     </main>
 
-    <footer class="bg-white border-top py-4 mt-5" style="min-height:80px;">
-        <div class="container d-flex flex-column justify-content-center align-items-center">
+    <footer class="bg-white border-top py-4 mt-5" style="flex:0 0 auto;min-height:80px;height:80px;">
+        <div class="container d-flex flex-column justify-content-center align-items-center h-100">
             <div class="mb-2">
                 <span class="me-2">&copy; 2025 SlideShare Modern</span>
             </div>
@@ -163,6 +163,9 @@
         .btn-outline-primary, .btn-outline-primary:focus, .btn-outline-primary:active {color:#0056b3 !important; border-color:#0056b3 !important;}
         .btn-outline-warning, .btn-outline-warning:focus, .btn-outline-warning:active {color:#ff9800 !important; border-color:#ff9800 !important;}
         .btn-outline-info, .btn-outline-info:focus, .btn-outline-info:active {color:#17a2b8 !important; border-color:#17a2b8 !important;}
+        html, body {height:100%;}
+        body {min-height:100vh;}
+        main {min-height:calc(100vh - 144px);}
         @media (max-width: 600px) {
             h1, h2, h3, .navbar-brand {font-size:1.2rem !important;}
             .form-control-lg {font-size:1rem;}
