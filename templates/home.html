@@ -19,18 +19,36 @@
         <!-- FontAwesome CSS (deferred, font-display swap) -->
         <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'" crossorigin>
         <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin></noscript>
-        <style>
-            @font-face {
+          <style>
+                        @font-face {
                 font-family: 'FontAwesome';
                 font-display: swap;
                 src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/webfonts/fa-solid-900.woff2') format('woff2');
                 font-weight: 900;
                 font-style: normal;
             }
-        </style>
-        <!-- Inline critical CSS for above-the-fold -->
-        <style>
-                .custom-loader-bg {position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;}
+        .custom-loader-bg {position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;}
+        .custom-loader {border:6px solid #f3f3f3;border-top:6px solid #007bff;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;}
+        @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+        .custom-loader-text {margin-top:1rem;text-align:center;font-size:1.1rem;color:#333;}
+        /* Accessibility: improve contrast for buttons and text */
+        .btn-primary, .btn-primary:focus, .btn-primary:active {background-color:#0056b3 !important; border-color:#0056b3 !important; color:#fff !important;}
+        .btn-success, .btn-success:focus, .btn-success:active {background-color:#218838 !important; border-color:#218838 !important; color:#fff !important;}
+        .btn-warning, .btn-warning:focus, .btn-warning:active {background-color:#ff9800 !important; border-color:#ff9800 !important; color:#212529 !important;}
+        .btn-info, .btn-info:focus, .btn-info:active {background-color:#17a2b8 !important; border-color:#17a2b8 !important; color:#fff !important;}
+        .btn-outline-primary, .btn-outline-primary:focus, .btn-outline-primary:active {color:#0056b3 !important; border-color:#0056b3 !important;}
+        .btn-outline-warning, .btn-outline-warning:focus, .btn-outline-warning:active {color:#ff9800 !important; border-color:#ff9800 !important;}
+        .btn-outline-info, .btn-outline-info:focus, .btn-outline-info:active {color:#17a2b8 !important; border-color:#17a2b8 !important;}
+    html, body {height:100%;}
+    body {min-height:100vh;overflow-anchor:none;}
+    main {min-height:calc(100vh - 144px);}
+        @media (max-width: 600px) {
+            h1, h2, h3, .navbar-brand {font-size:1.2rem !important;}
+            .form-control-lg {font-size:1rem;}
+            .btn-lg {font-size:1rem;padding:.5rem 1.2rem;}
+            .card {padding:1.2rem !important;}
+        }
+        .custom-loader-bg {position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;}
                 .custom-loader {border:6px solid #f3f3f3;border-top:6px solid #007bff;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;}
                 @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
                 .custom-loader-text {margin-top:1rem;text-align:center;font-size:1.1rem;color:#333;}
@@ -40,7 +58,7 @@
                         .btn-lg {font-size:1rem;padding:.5rem 1.2rem;}
                         .card {padding:1.2rem !important;}
                 }
-        </style>
+    </style>
         <!-- Defer non-critical CSS -->
         <link rel="stylesheet" href="{% static 'css/home.css' %}" media="print" onload="this.media='all'">
         <link rel="stylesheet" href="{% static 'css/loader.css' %}" media="print" onload="this.media='all'">
@@ -152,26 +170,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" async crossorigin></script>
     <script src="{% static 'js/home.js' %}" defer></script>
 </body>
-    <style>
-        .custom-loader-bg {position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;}
-        .custom-loader {border:6px solid #f3f3f3;border-top:6px solid #007bff;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;}
-        @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-        .custom-loader-text {margin-top:1rem;text-align:center;font-size:1.1rem;color:#333;}
-        /* Accessibility: improve contrast for buttons and text */
-        .btn-primary, .btn-primary:focus, .btn-primary:active {background-color:#0056b3 !important; border-color:#0056b3 !important; color:#fff !important;}
-        .btn-success, .btn-success:focus, .btn-success:active {background-color:#218838 !important; border-color:#218838 !important; color:#fff !important;}
-        .btn-warning, .btn-warning:focus, .btn-warning:active {background-color:#ff9800 !important; border-color:#ff9800 !important; color:#212529 !important;}
-        .btn-info, .btn-info:focus, .btn-info:active {background-color:#17a2b8 !important; border-color:#17a2b8 !important; color:#fff !important;}
-        .btn-outline-primary, .btn-outline-primary:focus, .btn-outline-primary:active {color:#0056b3 !important; border-color:#0056b3 !important;}
-        .btn-outline-warning, .btn-outline-warning:focus, .btn-outline-warning:active {color:#ff9800 !important; border-color:#ff9800 !important;}
-        .btn-outline-info, .btn-outline-info:focus, .btn-outline-info:active {color:#17a2b8 !important; border-color:#17a2b8 !important;}
-    html, body {height:100%;}
-    body {min-height:100vh;overflow-anchor:none;}
-    main {min-height:calc(100vh - 144px);}
-        @media (max-width: 600px) {
-            h1, h2, h3, .navbar-brand {font-size:1.2rem !important;}
-            .form-control-lg {font-size:1rem;}
-            .btn-lg {font-size:1rem;padding:.5rem 1.2rem;}
-            .card {padding:1.2rem !important;}
-        }
-    </style>
+   
+</html> 
