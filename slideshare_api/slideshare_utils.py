@@ -17,19 +17,48 @@ def fetch_image_urls(slideshare_url):
     Fetches image URLs from a SlideShare URL.
     """
     try:
-        html = requests.get(slideshare_url).content
+        response = requests.get(slideshare_url)
+        response.raise_for_status()
+        html = response.content
         soup = BeautifulSoup(html, "html.parser")
         
+        # Try different selectors for slide images
         images = soup.find_all("img", {"data-testid": "vertical-slide-image"})
+        if not images:
+            # Fallback to other possible selectors
+            images = soup.find_all("img", class_=lambda x: x and "slide" in x.lower()) or \
+                     soup.find_all("img", {"data-test": "slide-image"}) or \
+                     soup.find_all("img", src=lambda x: x and "slide" in x.lower())
+        
         image_urls = []
 
         for image in images:
-            image_url = image.get("srcset").split("w, ")[-1].split(" ")[0]
-            if image_url.endswith((".jpg", ".jpeg", ".png", ".webp")):
+            # Try to get image URL from srcset first, then fallback to src
+            srcset = image.get("srcset")
+            if srcset:
+                try:
+                    # Parse srcset to get the highest resolution image
+                    image_url = srcset.split("w, ")[-1].split(" ")[0]
+                except (IndexError, AttributeError):
+                    image_url = image.get("src")
+            else:
+                image_url = image.get("src")
+            
+            # Only add valid image URLs
+            if image_url and image_url.endswith((".jpg", ".jpeg", ".png", ".webp")):
+                # Ensure absolute URL
+                if image_url.startswith("//"):
+                    image_url = "https:" + image_url
+                elif image_url.startswith("/"):
+                    from urllib.parse import urlparse
+                    parsed_url = urlparse(slideshare_url)
+                    image_url = f"{parsed_url.scheme}://{parsed_url.netloc}{image_url}"
                 image_urls.append(image_url)
 
         return image_urls
 
+    except requests.RequestException as e:
+        raise Exception(f"Failed to fetch SlideShare page: {e}")
     except Exception as e:
         raise Exception(f"Failed to fetch image URLs: {e}")
 
