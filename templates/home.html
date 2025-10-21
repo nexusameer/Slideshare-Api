@@ -1,68 +1,306 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SlideShare Downloader | Download Slides Instantly</title>
-    <meta name="description" content="Easily download SlideShare presentations as images, PDF, PPT, or Word. Fast, free, and user-friendly.">
-    <meta name="keywords" content="slides, download, share, presentations, ppt, pdf, word, SlideShare, free, fast">
+    <title>SlideShare Downloader | Free, Fast & Secure PPT, PDF, Image Download</title>
+    <meta name="description"
+        content="Download any SlideShare presentation for FREE! Save slides as PDF, PPT, Word, or individual images. Get fast, secure, and unlimited offline access. No registration needed.">
+    <meta name="keywords"
+        content="slideshare downloader, download slideshare, slideshare to pdf, slideshare to ppt, slideshare free download, offline slideshare, download presentations">
     <meta name="robots" content="index, follow">
+
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
-        <!-- Preconnect for CDN performance -->
-        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-        <!-- Bootstrap CSS (deferred) -->
-        <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" onload="this.onload=null;this.rel='stylesheet'" crossorigin>
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin></noscript>
-        <!-- FontAwesome CSS (deferred, font-display swap) -->
-        <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'" crossorigin>
-        <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin></noscript>
-          <style>
-                        @font-face {
-                font-family: 'FontAwesome';
-                font-display: swap;
-                src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/webfonts/fa-solid-900.woff2') format('woff2');
-                font-weight: 900;
-                font-style: normal;
-            }
-        .custom-loader-bg {position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;}
-        .custom-loader {border:6px solid #f3f3f3;border-top:6px solid #007bff;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;}
-        @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-        .custom-loader-text {margin-top:1rem;text-align:center;font-size:1.1rem;color:#333;}
-        /* Accessibility: improve contrast for buttons and text */
-        .btn-primary, .btn-primary:focus, .btn-primary:active {background-color:#0056b3 !important; border-color:#0056b3 !important; color:#fff !important;}
-        .btn-success, .btn-success:focus, .btn-success:active {background-color:#218838 !important; border-color:#218838 !important; color:#fff !important;}
-        .btn-warning, .btn-warning:focus, .btn-warning:active {background-color:#ff9800 !important; border-color:#ff9800 !important; color:#212529 !important;}
-        .btn-info, .btn-info:focus, .btn-info:active {background-color:#17a2b8 !important; border-color:#17a2b8 !important; color:#fff !important;}
-        .btn-outline-primary, .btn-outline-primary:focus, .btn-outline-primary:active {color:#0056b3 !important; border-color:#0056b3 !important;}
-        .btn-outline-warning, .btn-outline-warning:focus, .btn-outline-warning:active {color:#ff9800 !important; border-color:#ff9800 !important;}
-        .btn-outline-info, .btn-outline-info:focus, .btn-outline-info:active {color:#17a2b8 !important; border-color:#17a2b8 !important;}
-    html, body {height:100%;}
-    body {min-height:100vh;overflow-anchor:none;}
-    main {min-height:calc(100vh - 144px);}
-        @media (max-width: 600px) {
-            h1, h2, h3, .navbar-brand {font-size:1.2rem !important;}
-            .form-control-lg {font-size:1rem;}
-            .btn-lg {font-size:1rem;padding:.5rem 1.2rem;}
-            .card {padding:1.2rem !important;}
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        onload="this.onload=null;this.rel='stylesheet'" crossorigin>
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            crossorigin>
+    </noscript>
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        onload="this.onload=null;this.rel='stylesheet'" crossorigin>
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            crossorigin>
+    </noscript>
+
+    <style>
+        /* Existing critical CSS (Kept) */
+        @font-face {
+            font-family: 'FontAwesome';
+            font-display: swap;
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/webfonts/fa-solid-900.woff2') format('woff2');
+            font-weight: 900;
+            font-style: normal;
         }
-        .custom-loader-bg {position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(255,255,255,0.85);z-index:2000;display:flex;align-items:center;justify-content:center;}
-                .custom-loader {border:6px solid #f3f3f3;border-top:6px solid #007bff;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;}
-                @keyframes spin {0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-                .custom-loader-text {margin-top:1rem;text-align:center;font-size:1.1rem;color:#333;}
-                @media (max-width: 600px) {
-                        h1, h2, h3, .navbar-brand {font-size:1.2rem !important;}
-                        .form-control-lg {font-size:1rem;}
-                        .btn-lg {font-size:1rem;padding:.5rem 1.2rem;}
-                        .card {padding:1.2rem !important;}
-                }
+
+        /* Added subtle hover effect for features */
+        .feature-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ... (rest of your existing style block) ... */
+        .custom-loader-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #007bff;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .custom-loader-text {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .btn-primary,
+        .btn-primary:focus,
+        .btn-primary:active {
+            background-color: #0056b3 !important;
+            border-color: #0056b3 !important;
+            color: #fff !important;
+        }
+
+        .btn-success,
+        .btn-success:focus,
+        .btn-success:active {
+            background-color: #218838 !important;
+            border-color: #218838 !important;
+            color: #fff !important;
+        }
+
+        .btn-warning,
+        .btn-warning:focus,
+        .btn-warning:active {
+            background-color: #ff9800 !important;
+            border-color: #ff9800 !important;
+            color: #212529 !important;
+        }
+
+        .btn-info,
+        .btn-info:focus,
+        .btn-info:active {
+            background-color: #17a2b8 !important;
+            border-color: #17a2b8 !important;
+            color: #fff !important;
+        }
+
+        .btn-outline-primary,
+        .btn-outline-primary:focus,
+        .btn-outline-primary:active {
+            color: #0056b3 !important;
+            border-color: #0056b3 !important;
+        }
+
+        .btn-outline-warning,
+        .btn-outline-warning:focus,
+        .btn-outline-warning:active {
+            color: #ff9800 !important;
+            border-color: #ff9800 !important;
+        }
+
+        .btn-outline-info,
+        .btn-outline-info:focus,
+        .btn-outline-info:active {
+            color: #17a2b8 !important;
+            border-color: #17a2b8 !important;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-anchor: none;
+        }
+
+        main {
+            min-height: calc(100vh - 144px);
+        }
+
+        /* Slides preview responsive grid: 1 (xs), 2 (mobile), 4 (desktop) */
+        #imagesPreview {
+            display: grid !important;
+            grid-template-columns: 1fr !important; /* very small screens */
+            gap: 12px;
+            align-items: start;
+        }
+
+        @media (min-width: 480px) {
+            /* regular mobile */
+            #imagesPreview {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            /* desktop */
+            #imagesPreview {
+                grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            }
+        }
+
+        /* Flatten any Bootstrap grid wrappers that JS might inject */
+        #imagesPreview .row,
+        #imagesPreview [class*="col-"],
+        #imagesPreview .col,
+        #imagesPreview .col-sm,
+        #imagesPreview .col-md,
+        #imagesPreview .col-lg {
+            display: contents !important;
+            /* let the grid own the layout */
+            width: auto !important;
+            max-width: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            flex: none !important;
+        }
+
+        /* Ensure items fill their grid cells */
+        #imagesPreview > *,
+        #imagesPreview > * > * {
+            width: 100% !important;
+        }
+
+        /* Thumbnail styling */
+        #imagesPreview img {
+            width: 100% !important;
+            height: 160px !important;
+            /* tweak to change thumbnail size */
+            object-fit: contain;
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: .25rem;
+            padding: .25rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+
+            h1,
+            h2,
+            h3,
+            .navbar-brand {
+                font-size: 1.2rem !important;
+            }
+
+            .form-control-lg {
+                font-size: 1rem;
+            }
+
+            .btn-lg {
+                font-size: 1rem;
+                padding: .5rem 1.2rem;
+            }
+
+            .card {
+                padding: 1.2rem !important;
+            }
+        }
     </style>
-        <!-- Defer non-critical CSS -->
-        <link rel="stylesheet" href="{% static 'css/home.css' %}" media="print" onload="this.media='all'">
-        <link rel="stylesheet" href="{% static 'css/loader.css' %}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{% static 'css/loader.css' %}" media="print" onload="this.media='all'">
+
+    <style id="images-preview-overrides">
+        /* Final overrides: 1 (xs), 2 (mobile), 4 (desktop) */
+        #imagesPreview {
+            display: grid !important;
+            grid-template-columns: 1fr !important; /* very small screens */
+            gap: 12px !important;
+            align-items: start !important;
+        }
+
+        @media (min-width: 576px) {
+            /* mobile */
+            #imagesPreview {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            /* desktop */
+            #imagesPreview {
+                grid-template-columns: repeat(4, 1fr) !important;
+            }
+        }
+
+        /* Flatten Bootstrap wrappers that may be injected */
+        #imagesPreview .row,
+        #imagesPreview [class*="col-"],
+        #imagesPreview .col,
+        #imagesPreview .col-sm,
+        #imagesPreview .col-md,
+        #imagesPreview .col-lg {
+            display: contents !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: auto !important;
+            max-width: none !important;
+            flex: none !important;
+        }
+
+        /* Ensure grid items fill the cell */
+        #imagesPreview > *,
+        #imagesPreview > * > * {
+            width: 100% !important;
+        }
+
+        /* Thumbnail look */
+        #imagesPreview img {
+            width: 100% !important;
+            height: 180px !important;
+            /* adjust as needed */
+            object-fit: contain !important;
+            background: #fff !important;
+            border: 1px solid #e9ecef !important;
+            border-radius: .25rem !important;
+            padding: .25rem !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+            display: block !important;
+        }
+
+        /* Hide advanced options until user clicks "Download Images" */
+        #advancedOptions.advanced-options-hidden {
+            display: none !important;
+        }
+    </style>
 </head>
+
 <body style="min-height:100vh;display:flex;flex-direction:column;overflow-anchor:none;">
     <div id="customLoader" class="custom-loader-bg" style="display:none;">
         <div>
@@ -70,105 +308,219 @@
             <div class="custom-loader-text">Preparing your file, please wait...</div>
         </div>
     </div>
+
     <header style="flex:0 0 auto;min-height:64px;height:64px;">
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom" style="min-height:64px;height:64px;">
             <div class="container">
-                <a class="navbar-brand fw-bold text-primary" href="#" style="font-size:1.5rem;">SlideShare Downloader</a>
+                <a class="navbar-brand fw-bold text-primary" href="#" style="font-size:1.5rem;">SlideShare
+                    Downloader</a>
             </div>
         </nav>
     </header>
 
-    <main style="flex:1 0 auto;min-height:calc(100vh - 144px);margin-bottom:0;display:flex;align-items:stretch;">
-      <div style="width:100%;max-width:100vw;">
-        <!-- Download Section (Functionality) -->
-        <section id="download-section" class="container mb-5">
-            <div class="card shadow-sm p-4 mb-4">
-                <h2 class="mb-3 text-center text-primary">Download Any Slide in Seconds</h2>
-                <div class="mb-3">
-                    <input type="text" id="slideshareUrl" class="form-control form-control-lg" placeholder="Paste SlideShare PPT URL here" aria-label="Paste SlideShare PPT URL here">
-                </div>
-                <div class="d-flex justify-content-center mb-2">
-                    <button class="btn btn-primary btn-lg px-4" onclick="downloadImages()">Download Images</button>
-                </div>
-                <div class="d-flex flex-wrap gap-2 mb-4 justify-content-center">
-                    <button class="btn btn-success" onclick="downloadPDF()">Download PDF</button>
-                    <button class="btn btn-warning" onclick="downloadPPT()">Download PPT</button>
-                    <button class="btn btn-info text-white" onclick="downloadWord()">Download Word</button>
-                    <button class="btn btn-outline-primary" onclick="downloadCompressedPDF()">Compressed PDF</button>
-                    <button class="btn btn-outline-warning" onclick="downloadCompressedPPT()">Compressed PPT</button>
-                    <button class="btn btn-outline-info" onclick="downloadCompressedWord()">Compressed Word</button>
-                </div>
-                <div id="errorMsg" class="alert alert-danger d-none" role="alert"></div>
-                <div id="imagesPreview" class="mt-4" style="display:none;"></div>
-            </div>
-        </section>
+    <main style="flex:1 0 auto;min-height:calc(100vh - 144px);margin-bottom:0;">
+        <div class="container my-5">
 
-        <!-- Instructions Section -->
-        <section class="container py-4">
-            <article class="text-center mb-4">
-                <h1 class="mb-3">How to Download Slides</h1>
-                <p class="lead">Paste your SlideShare link, select your format, and download instantly. No registration required!</p>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-6 col-md-2">
-                        <img src="{% static 'images/link.svg' %}" alt="Paste Link icon" class="mb-2" width="48" height="48" style="width:48px;height:48px;display:block;" loading="eager">
-                        <div>Paste Link</div>
+            <section id="download-section" class="container mb-5">
+                <div class="card shadow-sm p-4 mb-4">
+                    <h2 class="mb-3 text-center text-primary">Download Any Slide in Seconds</h2>
+                    <div class="mb-3">
+                        <input type="text" id="slideshareUrl" class="form-control form-control-lg"
+                            placeholder="Paste SlideShare PPT URL here" aria-label="Paste SlideShare PPT URL here">
                     </div>
-                    <div class="col-6 col-md-2">
-                        <img src="{% static 'images/choose.svg' %}" alt="Choose Format icon" class="mb-2" width="48" height="48" style="width:48px;height:48px;display:block;" loading="eager">
-                        <div>Choose Format</div>
-                    </div>
-                    <div class="col-6 col-md-2">
-                        <img src="{% static 'images/download.svg' %}" alt="Download icon" class="mb-2" width="48" height="48" style="width:48px;height:48px;display:block;" loading="eager">
-                        <div>Download</div>
-                    </div>
-                </div>
-            </article>
-        </section>
 
-        <!-- What We Offer Section -->
-        <section class="container mb-5">
-            <article class="text-center mb-4">
-                <h2 class="mb-3">What We Offer</h2>
-                <div class="row g-4 justify-content-center">
-                    <div class="col-12 col-md-4">
-                        <div class="p-3 border rounded bg-white h-100">
-                            <i class="fa-solid fa-bolt step-icon mb-2"></i>
-                            <h3 class="h5">Fast & Free</h3>
-                            <p>Download slides in seconds, always free and unlimited.</p>
+                    <input type="checkbox" id="toggle-options" class="d-none">
+
+                    <div class="d-flex justify-content-center mb-2">
+                        <button class="btn btn-primary btn-lg px-4" onclick="startImagesDownload()">Download Images</button>
+                    </div>
+
+                    <div id="advancedOptions" class="advanced-options-hidden">
+
+                        <div id="imagesPreview" class="mt-4 mb-4">
+                            <p class="text-center text-muted">Images will load here after clicking the button...</p>
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                            <button class="btn btn-success">Download PDF</button>
+                            <button class="btn btn-warning">Download PPT</button>
+                            <button class="btn btn-info text-white">Download Word</button>
                         </div>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <div class="p-3 border rounded bg-white h-100">
-                            <i class="fa-solid fa-file-arrow-down step-icon mb-2"></i>
-                            <h3 class="h5">Multiple Formats</h3>
-                            <p>Get slides as images, PDF, PPT, or Word—whatever you need.</p>
-                        </div>
+
+                    <div id="errorMsg" class="alert alert-danger d-none" role="alert"></div>
+                </div>
+            </section>
+
+
+
+
+            <section id="seo-content" class="py-4">
+
+                <div class="row g-4 mb-5">
+                    <div class="col-lg-6">
+                        <h2 class="text-primary mb-3"><i class="fas fa-book-reader me-2"></i>Why Use Our Downloader?
+                        </h2>
+                        <p>In today's digital world, access to information is key. Millions rely on **SlideShare** for
+                            high-quality presentations and documents. The problem? You can't always view materials when
+                            you're **offline**.</p>
+                        <p>This dedicated tool solves that. It's an essential utility designed to save any SlideShare
+                            presentation directly to your device, ensuring you can study, share, or present anytime, in
+                            your travels, or during class—**even without an internet connection**.</p>
                     </div>
-                    <div class="col-12 col-md-4">
-                        <div class="p-3 border rounded bg-white h-100">
-                            <i class="fa-solid fa-shield-halved step-icon mb-2"></i>
-                            <h3 class="h5">Safe & Private</h3>
-                            <p>No sign-up, no tracking. Your downloads are private and secure.</p>
+                    <div class="col-lg-6">
+                        <h2 class="text-primary mb-3"><i class="fas fa-question-circle me-2"></i>What is SlideShare?
+                        </h2>
+                        <p>SlideShare is the world's largest online platform for sharing and discovering presentations,
+                            documents, and infographics. It is owned by **LinkedIn** (part of Microsoft).</p>
+                        <p>Think of it as the **“YouTube for slides.”** It is the professional platform to explore
+                            PowerPoint presentations, PDFs, and Keynote files uploaded by millions globally—a crucial
+                            resource for business ideas, academic research, and learning new concepts.</p>
+                    </div>
+                </div>
+
+                <div class="bg-light p-4 p-md-5 rounded-3 mb-5">
+                    <h2 class="text-dark text-center mb-4"><i class="fas fa-star me-2"></i>Key Features That Set Us
+                        Apart</h2>
+                    <div class="row g-4">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card p-3 h-100 text-center border-0 feature-card shadow-sm">
+                                <i class="fas fa-bolt fa-2x text-warning mb-2"></i>
+                                <h5 class="fw-bold">Fast & Secure</h5>
+                                <p class="text-muted small mb-0">Quick downloads protected by SSL encryption. No risks,
+                                    just speed.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card p-3 h-100 text-center border-0 feature-card shadow-sm">
+                                <i class="fas fa-file-alt fa-2x text-success mb-2"></i>
+                                <h5 class="fw-bold">Multiple Formats</h5>
+                                <p class="text-muted small mb-0">Save as **PDF**, **PPTX** (for editing), **Images**, or
+                                    **Word** files.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card p-3 h-100 text-center border-0 feature-card shadow-sm">
+                                <i class="fas fa-user-times fa-2x text-danger mb-2"></i>
+                                <h5 class="fw-bold">No Registration</h5>
+                                <p class="text-muted small mb-0">Use the tool instantly. No sign-ups, no software
+                                    installation required.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="card p-3 h-100 text-center border-0 feature-card shadow-sm">
+                                <i class="fas fa-infinity fa-2x text-primary mb-2"></i>
+                                <h5 class="fw-bold">Free & Unlimited</h5>
+                                <p class="text-muted small mb-0">Completely free to use with zero restrictions on the
+                                    number of downloads.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </article>
-        </section>
 
-            </div>
-        </main>
+                <h2 class="text-primary mb-4 text-center"><i class="fas fa-tools me-2"></i>How to Use Our SlideShare
+                    Downloader (4 Simple Steps)</h2>
+                <div class="card p-4 shadow-lg mb-5 mx-auto" style="max-width: 800px;">
+                    <ol class="list-group list-group-flush list-group-numbered">
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <i class="fas fa-link fa-lg text-primary me-3"></i>
+                            Visit **SlideShare.net** and **Copy the URL** of your desired presentation from the browser
+                            bar.
+                        </li>
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <i class="fas fa-paste fa-lg text-primary me-3"></i>
+                            **Paste the link** into the input field at the top of this page.
+                        </li>
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <i class="fas fa-mouse-pointer fa-lg text-primary me-3"></i>
+                            Click your preferred download format: **PDF** (fastest), **PPTX**, **Images**, or **Word**.
+                        </li>
+                        <li class="list-group-item d-flex align-items-center py-3">
+                            <i class="fas fa-check-circle fa-lg text-primary me-3"></i>
+                            Wait a few seconds. Your file will automatically be **saved to your device** for offline
+                            access!
+                        </li>
+                    </ol>
+                </div>
+
+                <h2 class="text-primary mb-4 text-center"><i class="fas fa-comments me-2"></i>Frequently Asked Questions
+                    (FAQ)</h2>
+                <div class="accordion mx-auto" id="faqAccordion" style="max-width: 800px;">
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Can I download SlideShare presentations without an account?
+                            </button>
+                        </h3>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                            data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                **Yes, absolutely.** Our online SlideShare document downloader allows you to save
+                                presentations without requiring a SlideShare or LinkedIn account. The best tools, like
+                                ours, work directly in your browser.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Is it legal to download content from SlideShare?
+                            </button>
+                        </h3>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                            data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Downloading content for **personal study or educational use is generally considered
+                                ethical and acceptable.** However, you must be careful: republishing, distributing, or
+                                selling someone else’s work without explicit permission is a violation of copyright
+                                rules.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h3 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Will the downloaded presentation keep its original quality?
+                            </button>
+                        </h3>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                            data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                **Yes, it will.** Whether you download it as a PDF, PPTX, or a ZIP with JPEG images, our
+                                tool is engineered to ensure the presentation is saved without compression or quality
+                                loss, preserving the original fidelity.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 
     <footer class="bg-white border-top py-4 mt-5" style="flex:0 0 auto;min-height:80px;height:80px;">
-        <div class="container d-flex flex-column justify-content-center align-items-center h-100" style="min-height:80px;height:80px;">
+        <div class="container d-flex flex-column justify-content-center align-items-center h-100"
+            style="min-height:80px;height:80px;">
             <div class="mb-2" style="min-height:24px;height:24px;display:flex;align-items:center;">
                 <span class="me-2">&copy; 2025 SlideShare Modern</span>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer crossorigin></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer
+        crossorigin></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" async crossorigin></script>
     <script src="{% static 'js/home.js' %}" defer></script>
+    <script>
+        // Show advanced options and then trigger the existing download logic
+        function startImagesDownload() {
+            var adv = document.getElementById('advancedOptions');
+            if (adv) adv.classList.remove('advanced-options-hidden');
+            if (typeof downloadImages === 'function') downloadImages();
+        }
+    </script>
 </body>
-   
-</html> 
+
+</html>
