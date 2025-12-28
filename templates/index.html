@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Slideshare Downloader – PPT & PDF</title>
+    <title>SlideShare Downloader | Free, Fast & Secure - 2025</title>
     <meta name="description"
         content="Fast & Easy Slideshare Downloader – Get High-Quality PPT & PDF/DOC with the Best Online Tool, No Login Needed!">
     <meta name="keywords"
@@ -14,27 +14,417 @@
 
     <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin>
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 
 <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">
+                <i class="fas fa-file-powerpoint"></i>
+                <span>SlideSaver</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <a href="#testimonials" class="nav-link">Reviews</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#download" class="nav-cta">
+                    <i class="fas fa-download"></i>
+                    Download Now
+                </a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
     <!-- Loader -->
     <div id="customLoader" class="custom-loader-bg" style="display:none;">
         <div class="custom-loader"></div>
         <div class="custom-loader-text">Preparing your file, please wait...</div>
     </div>
 
-    <div class="main-container">
-        <h1 class="page-title">Free Slideshare Downloader – PPT & PDF</h1>
-        <p class="page-subtitle">Fast & Easy Slideshare Downloader – Get High-Quality PPT & PDF/DOC with the Best Online Tool, No Login Needed!</p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Free Slideshare Downloader</h1>
+            <p class="hero-subtitle">Download High-Quality PPT, PDF & DOC files instantly. No login required!</p>
+            
+            {% include 'download-section.html' %}
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="#f8fafc"></path>
+            </svg>
+        </div>
+    </section>
 
-        {% include 'download-section.html' %}
-    </div>
+    <!-- Introduction Section -->
+    <section class="intro-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="intro-content">
+                        <span class="section-badge">About Our Tool</span>
+                        <h2>Introduction</h2>
+                        <p>In today's world, information is the key to every digital thing. Many students, teachers, and professionals use SlideShare to find their presentations, infographics, documents, PDFs, and videos. So this great platform comes with tons of useful resources for every age of people.</p>
+                        <p>But the developers made a tool named as <strong>SlideShare Downloader</strong> to get rid of the internet issue while you are offline. It's an easy tool that helps you save SlideShare presentations, PDFs, and documents directly to your device.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="intro-image">
+                        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&h=400&fit=crop" alt="Presentation workspace" class="rounded-image">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>PDF Ready</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-file-powerpoint"></i>
+                            <span>PPT Export</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <span>&copy; 2025 SlideShare Downloader</span>
+    <!-- What is SlideShare Section -->
+    <section class="what-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-2">
+                    <div class="what-content">
+                        <span class="section-badge">Learn More</span>
+                        <h2>What is SlideShare?</h2>
+                        <p>SlideShare is an online platform where people can share and discover presentations, documents, infographics, and videos. It's owned by LinkedIn, part of Microsoft. It was first launched in 2006 and later acquired by LinkedIn in 2012.</p>
+                        <p>Think of it as a <strong>"YouTube for slides"</strong> but instead of videos, you can explore PowerPoint presentations, PDFs, Keynote files, and professional reports uploaded by users around the world.</p>
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <span class="stat-number">18M+</span>
+                                <span class="stat-label">Presentations</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">80M+</span>
+                                <span class="stat-label">Monthly Visitors</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">2006</span>
+                                <span class="stat-label">Founded</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <div class="what-image">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=400&fit=crop" alt="Team presentation" class="rounded-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Make Presentation Section -->
+    <section id="how-it-works" class="howto-make-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-badge">Quick Guide</span>
+                <h2>How to Make a SlideShare Presentation?</h2>
+                <p class="section-desc">Follow these simple steps to create an engaging presentation</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>Choose a Title</h3>
+                    <p>Start by choosing a clear and catchy title that grabs attention</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-play-circle"></i></div>
+                    <h3>Design Intro Slide</h3>
+                    <p>Create an introductory slide to set the tone for your presentation</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-list-ul"></i></div>
+                    <h3>Add Body Slides</h3>
+                    <p>Explain your topic in simple, clean, and organized points</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-flag-checkered"></i></div>
+                    <h3>Conclusion</h3>
+                    <p>Finish with a conclusion slide that summarizes your key ideas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Do You Need Section -->
+    <section class="why-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <div class="why-content">
+                        <span class="section-badge">Benefits</span>
+                        <h2>Why Do You Need a SlideShare Downloader?</h2>
+                        <p>A Free SlideShare Downloader Online makes it easy to save presentations, PDFs, and PPT files directly to your device. This is helpful for many people.</p>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="user-cards">
+                        <div class="user-card">
+                            <div class="user-icon students"><i class="fas fa-user-graduate"></i></div>
+                            <div class="user-info">
+                                <h4>Students</h4>
+                                <p>Gathering research material, theses, etc. Convert Slideshare to PDF for offline study.</p>
+                            </div>
+                        </div>
+                        <div class="user-card">
+                            <div class="user-icon teachers"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <div class="user-info">
+                                <h4>Teachers</h4>
+                                <p>Preparing lessons for classes with educational resources download.</p>
+                            </div>
+                        </div>
+                        <div class="user-card">
+                            <div class="user-icon professionals"><i class="fas fa-briefcase"></i></div>
+                            <div class="user-info">
+                                <h4>Professionals</h4>
+                                <p>Storing business presentations using PPT download tool to edit in PowerPoint.</p>
+                            </div>
+                        </div>
+                        <div class="user-card">
+                            <div class="user-icon marketers"><i class="fas fa-chart-line"></i></div>
+                            <div class="user-info">
+                                <h4>Marketers</h4>
+                                <p>Reviewing industry reports and competitor presentations for insights.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-badge">Why Choose Us</span>
+                <h2>Features of Our SlideShare Downloader</h2>
+                <p class="section-desc">The best SlideShare Document Downloader that offers speed, safety, and ease of use</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hand-pointer"></i></div>
+                    <h3>User-Friendly Interface</h3>
+                    <p>Easy to use with a clean, simple design. Just paste your SlideShare link and start downloading right away. No complicated steps or technical issues.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                    <h3>Multiple Formats</h3>
+                    <p>Save files in different formats - PDF for offline reading, PPT/PPTX for editing in Microsoft PowerPoint, and Image formats (JPEG/PNG) for visual projects.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-user-slash"></i></div>
+                    <h3>No Registration Required</h3>
+                    <p>Works directly online without account sign-ups. No registration, no software installation - just a smooth, simple, and hassle-free experience.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Fast & Secure</h3>
+                    <p>Quick downloads without delays. SSL encryption protects you from malware, phishing, or spyware risks. Get your files fast while staying safe.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-infinity"></i></div>
+                    <h3>Free & Unlimited</h3>
+                    <p>Free to use with unlimited downloads. Not bound to a specific number of downloads per day - accessible to everyone without restrictions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-wifi-slash"></i></div>
+                    <h3>Offline Access</h3>
+                    <p>Download presentations in advance and use them anytime, even without internet. Perfect for classes or meetings where there's no Wi-Fi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="howto-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="howto-content">
+                        <span class="section-badge">Step by Step</span>
+                        <h2>How to Use SlideShare Downloader?</h2>
+                        <p>Using this downloader is very simple. Just follow these easy steps:</p>
+                        <div class="howto-steps">
+                            <div class="howto-step">
+                                <div class="step-num">1</div>
+                                <div class="step-text">
+                                    <h4>Visit SlideShare</h4>
+                                    <p>Go to SlideShare.net and open the presentation you want to save.</p>
+                                </div>
+                            </div>
+                            <div class="howto-step">
+                                <div class="step-num">2</div>
+                                <div class="step-text">
+                                    <h4>Copy the Link</h4>
+                                    <p>Copy the URL of your desired presentation from the browser.</p>
+                                </div>
+                            </div>
+                            <div class="howto-step">
+                                <div class="step-num">3</div>
+                                <div class="step-text">
+                                    <h4>Paste & Choose Format</h4>
+                                    <p>Paste the link in our tool and select your preferred format (PDF, PPT, or Word).</p>
+                                </div>
+                            </div>
+                            <div class="howto-step">
+                                <div class="step-num">4</div>
+                                <div class="step-text">
+                                    <h4>Download</h4>
+                                    <p>Click download and your file will be saved to your device in seconds!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="howto-image">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=500&fit=crop" alt="Download process" class="rounded-image">
+                        <div class="howto-floating">
+                            <i class="fas fa-download"></i>
+                            <span>Quick Download</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Banner -->
+    <section class="benefits-banner">
+        <div class="container">
+            <div class="benefits-content">
+                <h2>Benefits of Using Our Downloader</h2>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Easy to use and access knowledge</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Saves time and effort</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Works on every device</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Review Section -->
+    <section id="testimonials" class="review-section">
+        <div class="container">
+            <div class="review-card">
+                <div class="review-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="review-content">
+                    <span class="section-badge">Developer's Note</span>
+                    <h2>My Personal Review</h2>
+                    <p>I built this tool because I was frustrated with other downloaders. Most were slow, filled with ads, or forced me to sign up before downloading. With our SlideShare Downloader, the process is so much simpler - <strong>no logins required, ad-free, just copy, paste, and download.</strong></p>
+                    <p>What I love most is how fast and clean it is. It works smoothly on both my laptop and phone, making it easy to save slides for study, projects, or work without any hassle. Let me know if you want to give any recommendations.</p>
+                    <div class="review-signature">
+                        <span>— The Developer</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-badge">Got Questions?</span>
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <div class="faq-icon"><i class="fas fa-question-circle"></i></div>
+                    <h3>What if my download does not work?</h3>
+                    <p>If your download does not start, wait a few minutes and try again. If the issue continues, reach out to our support team for assistance.</p>
+                </div>
+                <div class="faq-card">
+                    <div class="faq-icon"><i class="fas fa-image"></i></div>
+                    <h3>Will the downloaded presentation keep its original quality?</h3>
+                    <p>Yes. Whether you download it as a PDF, PPTX, or a ZIP with JPEG images, the presentation will keep its original quality without compression.</p>
+                </div>
+                <div class="faq-card">
+                    <div class="faq-icon"><i class="fas fa-user-lock"></i></div>
+                    <h3>Can I download without an account?</h3>
+                    <p>Yes. Our online SlideShare document downloader allows you to save presentations without requiring a SlideShare or LinkedIn account.</p>
+                </div>
+                <div class="faq-card">
+                    <div class="faq-icon"><i class="fas fa-gavel"></i></div>
+                    <h3>Is it legal to download from SlideShare?</h3>
+                    <p>Downloading content for personal study or educational use is generally fine. However, republishing or selling someone else's work without permission is not allowed.</p>
+                </div>
+                <div class="faq-card">
+                    <div class="faq-icon"><i class="fas fa-file-powerpoint"></i></div>
+                    <h3>Can I download SlideShare as PPT?</h3>
+                    <p>Yes, our tool supports all types of formats including PPT, PDF, and Word documents.</p>
+                </div>
+                <div class="faq-card">
+                    <div class="faq-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Can I download multiple presentations at once?</h3>
+                    <p>Currently, our tool supports downloading one presentation at a time. Simply repeat the process for each presentation you need.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section class="conclusion-section">
+        <div class="container">
+            <div class="conclusion-content">
+                <h2>Ready to Download?</h2>
+                <p>A SlideShare Downloader is a simple and effective way to save valuable presentations, documents, and other resources for offline use. Whether you're a student, teacher, or professional, having files saved on your device means you'll never lose access to important knowledge.</p>
+                <p>If you want to study smarter, work more efficiently, and keep your learning materials handy at all times, try our free downloader tool today!</p>
+                <a href="#" class="cta-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+                    <i class="fas fa-arrow-up"></i> Start Downloading Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-download"></i>
+                    <span>SlideShare Downloader</span>
+                </div>
+                <p class="footer-text">Free, Fast & Secure SlideShare Downloader - 2025</p>
+                <p class="footer-copy">&copy; 2025 SlideShare Downloader. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer crossorigin></script>

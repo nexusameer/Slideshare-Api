@@ -1,1 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#0d6efd"/><text x="50%" y="50%" text-anchor="middle" dy=".35em" font-size="32" fill="#fff" font-family="Arial, Helvetica, sans-serif">S</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background with gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="slideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded square background -->
+  <rect width="64" height="64" rx="14" fill="url(#bgGrad)"/>
+  
+  <!-- Stacked slides effect (back slide) -->
+  <rect x="18" y="12" width="32" height="24" rx="3" fill="#ffffff" opacity="0.3" transform="rotate(-6 34 24)"/>
+  
+  <!-- Front slide/document -->
+  <rect x="14" y="14" width="32" height="24" rx="3" fill="url(#slideGrad)"/>
+  
+  <!-- Slide content lines -->
+  <rect x="18" y="19" width="16" height="3" rx="1.5" fill="#3b82f6"/>
+  <rect x="18" y="25" width="24" height="2" rx="1" fill="#94a3b8"/>
+  <rect x="18" y="30" width="20" height="2" rx="1" fill="#94a3b8"/>
+  
+  <!-- Download arrow circle -->
+  <circle cx="42" cy="44" r="14" fill="#ffffff"/>
+  
+  <!-- Download arrow -->
+  <path d="M42 36 L42 48 M36 44 L42 50 L48 44" stroke="#1e3a8a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
