@@ -1,0 +1,27 @@
+<div class="download-card">
+    <!-- URL Input -->
+    <input type="text" id="slideshareUrl" class="url-input" 
+        placeholder="SlideShare Link * (e.g., https://www.slideshare.net/...)">
+    
+    <!-- Download Button -->
+    <button class="btn-download-main" onclick="startImagesDownload()">Download</button>
+
+    <!-- Error Message -->
+    <div id="errorMsg" class="error-msg"></div>
+
+    <!-- Preview Section (hidden initially) -->
+    <div id="previewSection" class="preview-section">
+        <!-- Images Grid -->
+        <div id="imagesPreview" class="images-grid"></div>
+
+        <!-- Format Selection Buttons -->
+        <div class="format-buttons">
+            <button id="btnPdf" class="btn-format btn-pdf" onclick="selectFormat('pdf')">PDF</button>
+            <button id="btnPpt" class="btn-format btn-ppt" onclick="selectFormat('ppt')">PPT</button>
+            <button id="btnWord" class="btn-format btn-word" onclick="selectFormat('word')">Word</button>
+        </div>
+
+        <!-- Final Download Button -->
+        <button class="btn-final-download" onclick="downloadSelectedFormat()">Download</button>
+    </div>
+</div>
