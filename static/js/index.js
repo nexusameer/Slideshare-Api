@@ -6,19 +6,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
 
     // Scroll effect for navbar
+    let lastScroll = 0;
     window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
+        const currentScroll = window.scrollY;
+        
+        if (currentScroll > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
+        
+        lastScroll = currentScroll;
     });
 
-    // Mobile menu toggle
+    // Mobile menu toggle with body scroll lock
     if (navToggle) {
-        navToggle.addEventListener('click', function() {
-            navToggle.classList.toggle('active');
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isActive = navToggle.classList.toggle('active');
             navMenu.classList.toggle('active');
+            document.body.classList.toggle('menu-open', isActive);
         });
     }
 
@@ -27,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function() {
             navToggle.classList.remove('active');
             navMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
         });
     });
 
@@ -35,6 +43,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!navbar.contains(e.target) && navMenu.classList.contains('active')) {
             navToggle.classList.remove('active');
             navMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+    });
+
+    // Prevent menu close when clicking inside menu
+    if (navMenu) {
+        navMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    // Close menu on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
         }
     });
 });
@@ -211,3 +236,38 @@ async function downloadSelectedFormat() {
         loader.style.display = 'none';
     }
 }
+// ==================== THEME TOGGLE ====================
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('themeToggle');
+    
+    if (themeToggle) {
+        // Check for saved theme preference or default to 'dark'
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        // Apply the theme
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-theme');
+        }
+        
+        // Update icon based on current theme
+        const icon = themeToggle.querySelector('i');
+        if (icon) {
+            icon.className = currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', function() {
+            const isLight = document.body.classList.contains('light-theme');
+            
+            if (isLight) {
+                document.body.classList.remove('light-theme');
+                localStorage.setItem('theme', 'dark');
+                if (icon) icon.className = 'fas fa-sun';
+            } else {
+                document.body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+                if (icon) icon.className = 'fas fa-moon';
+            }
+        });
+    }
+});

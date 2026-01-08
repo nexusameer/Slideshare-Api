@@ -1,33 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Background with gradient -->
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e3a8a"/>
-      <stop offset="100%" style="stop-color:#3b82f6"/>
+      <stop offset="0%" style="stop-color:#5dbbef;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="slideGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff"/>
-      <stop offset="100%" style="stop-color:#e2e8f0"/>
-    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
   
-  <!-- Rounded square background -->
-  <rect width="64" height="64" rx="14" fill="url(#bgGrad)"/>
+  <!-- Background -->
+  <rect width="64" height="64" rx="16" fill="url(#bgGrad)"/>
   
-  <!-- Stacked slides effect (back slide) -->
-  <rect x="18" y="12" width="32" height="24" rx="3" fill="#ffffff" opacity="0.3" transform="rotate(-6 34 24)"/>
-  
-  <!-- Front slide/document -->
-  <rect x="14" y="14" width="32" height="24" rx="3" fill="url(#slideGrad)"/>
-  
-  <!-- Slide content lines -->
-  <rect x="18" y="19" width="16" height="3" rx="1.5" fill="#3b82f6"/>
-  <rect x="18" y="25" width="24" height="2" rx="1" fill="#94a3b8"/>
-  <rect x="18" y="30" width="20" height="2" rx="1" fill="#94a3b8"/>
-  
-  <!-- Download arrow circle -->
-  <circle cx="42" cy="44" r="14" fill="#ffffff"/>
-  
-  <!-- Download arrow -->
-  <path d="M42 36 L42 48 M36 44 L42 50 L48 44" stroke="#1e3a8a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Cloud Shape -->
+  <g filter="url(#glow)">
+    <path d="M45 28c0-6.075-4.925-11-11-11-4.36 0-8.13 2.535-9.9 6.21A8.5 8.5 0 0015.5 31.5c0 4.694 3.806 8.5 8.5 8.5h20c4.142 0 7.5-3.358 7.5-7.5S48.142 28 44 28z" 
+          fill="white" opacity="0.95"/>
+    
+    <!-- Download arrow -->
+    <path d="M32 44V30M32 44l-5-5M32 44l5-5" 
+          stroke="#5dbbef" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Slides lines -->
+    <rect x="26" y="20" width="12" height="2" rx="1" fill="#7c3aed" opacity="0.7"/>
+    <rect x="26" y="24" width="8" height="2" rx="1" fill="#ec4899" opacity="0.7"/>
+  </g>
 </svg>

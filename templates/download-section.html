@@ -6,6 +6,13 @@
     <!-- Download Button -->
     <button class="btn-download-main" onclick="startImagesDownload()">Download</button>
 
+    <!-- Norton Badge -->
+    <div class="norton-badge">
+        <span>Scanned by</span>
+        <i class="fas fa-check-circle"></i>
+        <span><strong>Norton™ Safe Web</strong></span>
+    </div>
+
     <!-- Error Message -->
     <div id="errorMsg" class="error-msg"></div>
 
@@ -23,5 +30,17 @@
 
         <!-- Final Download Button -->
         <button class="btn-final-download" onclick="downloadSelectedFormat()">Download</button>
+        
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons">
+            <a href="/" class="btn-go-back">
+                <i class="fas fa-arrow-left"></i>
+                Go Back
+            </a>
+            <a href="/" class="btn-download-another">
+                <i class="fas fa-plus-circle"></i>
+                Download Another Slide
+            </a>
+        </div>
     </div>
 </div>
