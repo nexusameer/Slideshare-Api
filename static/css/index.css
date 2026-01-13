@@ -1962,6 +1962,101 @@ body.menu-open {
     }
 }
 
+/* ==================== MOBILE-FIRST TUNING (<= 640px) ==================== */
+@media (max-width: 640px) {
+    html {
+        font-size: 15px;
+    }
+
+    body {
+        padding-top: 76px; /* keep space for fixed nav */
+    }
+
+    .nav-container {
+        padding: 0 16px;
+    }
+
+    .intro-section,
+    .howto-section,
+    .features-section,
+    .benefits-banner,
+    .review-section,
+    .faq-section,
+    .conclusion-section {
+        padding: 48px 16px;
+    }
+
+    .intro-wrapper {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .intro-content {
+        text-align: left;
+    }
+
+    .intro-feature-item {
+        padding: 18px;
+    }
+
+    .intro-image-container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .intro-main-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .intro-stat-card {
+        position: relative;
+        margin-top: 12px;
+        left: 0;
+        right: 0;
+    }
+
+    .howto-section .row {
+        flex-direction: column;
+        gap: 28px;
+    }
+
+    .howto-image {
+        width: 100%;
+    }
+
+    .features-grid,
+    .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .feature-card,
+    .faq-card,
+    .review-card {
+        padding: 24px;
+    }
+
+    .benefits-list {
+        align-items: flex-start;
+    }
+
+    .benefit-item {
+        width: 100%;
+    }
+
+    .download-card {
+        padding: 22px 16px;
+    }
+
+    .cta-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
 /* ==================== NORTON BADGE ==================== */
 .norton-badge {
     display: flex;
