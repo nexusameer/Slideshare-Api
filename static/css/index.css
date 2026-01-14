@@ -63,8 +63,8 @@ body {
     right: 0;
     z-index: 1000;
     background: rgba(5, 5, 5, 0.98);
-    backdrop-filter: blur(40px) saturate(200%);
     -webkit-backdrop-filter: blur(40px) saturate(200%);
+    backdrop-filter: blur(40px) saturate(200%);
     border-bottom: 1px solid rgba(93, 187, 239, 0.2);
     padding: 18px 0;
     transition: var(--transition);
@@ -730,6 +730,7 @@ body {
     font-size: 12px;
     color: #10b981;
     font-weight: 600;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 100;
     animation: slideInRight 0.6s ease 1s both;
@@ -775,6 +776,7 @@ body {
     right: 0;
     bottom: 0;
     background: rgba(10, 10, 10, 0.95);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     z-index: 9999;
     display: flex;
@@ -988,7 +990,7 @@ body {
 .intro-stat-card {
     position: absolute;
     background: var(--bg-elevated);
-    backdrop-filter: blur(20px);
+    /* backdrop-filter: blur(20px); */
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 16px 20px;
@@ -1759,6 +1761,11 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* Container mobile adjustments */
+    .nav-container {
+        padding: 0 12px;
+    }
+    
     /* Mobile Menu Overlay */
     .nav-menu {
         position: fixed;
@@ -1769,12 +1776,12 @@ body {
         height: 100vh;
         display: flex;
         background: rgba(10, 10, 12, 0.94);
-        backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        gap: 18px;
+        gap: 28px;
         padding: calc(120px + env(safe-area-inset-top, 0px)) 28px 56px;
         transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 10px 60px rgba(0, 0, 0, 0.6);
@@ -1787,10 +1794,10 @@ body {
     }
 
     .nav-link {
-        font-size: 21px;
+        font-size: 19px;
         font-weight: 700;
         width: 100%;
-        padding: 10px 0;
+        padding: 14px 0;
         text-align: left;
         color: #ffffff;
         text-shadow: none;
@@ -1799,8 +1806,8 @@ body {
     /* Light theme overlay adjustments */
     .light-theme .nav-menu {
         background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
         color: var(--text-primary);
     }
 
@@ -1838,8 +1845,8 @@ body {
     }
 
     .hero-section {
-        padding: 85px 20px 50px;
-        min-height: auto;
+        padding: 68px 20px 50px;
+        min-height: initial;
     }
 
     .hero-title {
@@ -1876,13 +1883,7 @@ body {
     }
     
     .floating-norton-badge {
-        top: 64px;
-        right: 12px;
-        padding: 6px 12px;
-        font-size: 10px;
-        gap: 6px;
-        border-radius: 40px;
-        white-space: nowrap;
+        display: none;
     }
     
     .floating-norton-badge i {
@@ -1969,6 +1970,7 @@ body {
 
     .hero-title {
         font-size: 36px;
+        margin-top: -40px;
     }
 
     .hero-subtitle {
@@ -2200,7 +2202,7 @@ body.menu-open {
 
     .nav-container {
         padding: 0 14px;
-        gap: 12px;
+        gap: 70px;
     }
 
     .nav-actions {
