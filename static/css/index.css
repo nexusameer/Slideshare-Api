@@ -2318,49 +2318,6 @@ body.menu-open {
     }
 }
 
-/* ==================== NORTON BADGE ==================== */
-.norton-badge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 16px;
-    padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    font-size: 14px;
-    color: var(--text-secondary);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-.norton-badge:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-}
-
-.norton-badge i {
-    color: #00ff00;
-    font-size: 18px;
-    animation: pulse 2s ease-in-out infinite;
-}
-
-.norton-badge strong {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.6;
-    }
-}
-
 /* Light theme adjustments */
 .light-theme .norton-badge {
     background: rgba(0, 0, 0, 0.03);
