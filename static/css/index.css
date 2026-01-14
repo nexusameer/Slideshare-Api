@@ -2192,7 +2192,7 @@ body.menu-open {
     
     .nav-container {
         padding: 0 24px;
-        gap: 20px;
+        gap: 320px;
     }
 }
 
@@ -2208,7 +2208,7 @@ body.menu-open {
 
     .nav-container {
         padding: 0 14px;
-        gap: 70px;
+        gap: 220px;
     }
 
     .nav-actions {
