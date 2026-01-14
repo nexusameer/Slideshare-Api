@@ -62,6 +62,35 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.remove('menu-open');
         }
     });
+
+    // Active section link highlighting
+    function updateActiveLink() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+        
+        let currentSection = null;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
+                currentSection = section.id;
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+    
+    // Update active link on scroll
+    window.addEventListener('scroll', updateActiveLink);
+    window.addEventListener('load', updateActiveLink);
 });
 
 // ==================== DOWNLOAD FUNCTIONALITY ====================
