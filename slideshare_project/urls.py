@@ -23,8 +23,28 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'index.html')
 
+def about(request):
+    return render(request, 'about.html')
+
+def privacy(request):
+    return render(request, 'privacy.html')
+
+def contact(request):
+    return render(request, 'contact.html')
+
+def terms(request):
+    return render(request, 'terms.html')
+
+def dmca(request):
+    return render(request, 'dmca.html')
+
 urlpatterns = [
-    path('', home),
+    path('', home, name='home'),
+    path('about/', about, name='about'),
+    path('privacy/', privacy, name='privacy'),
+    path('contact/', contact, name='contact'),
+    path('terms/', terms, name='terms'),
+    path('dmca/', dmca, name='dmca'),
     path('admin/', admin.site.urls),
     path('api/slideshare/', include('slideshare_api.urls')), 
 ]
