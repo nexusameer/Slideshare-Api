@@ -292,40 +292,56 @@ body {
 
 .nav-toggle {
     display: none;
-    background: none;
-    border: none;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
     cursor: pointer;
-    padding: 8px;
+    padding: 10px;
     z-index: 1001;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-toggle:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
 }
 
 .hamburger {
     display: block;
-    width: 26px;
+    width: 22px;
     height: 2px;
     background: var(--text-primary);
     position: relative;
     transition: var(--transition);
-    border-radius: 2px;
+    border-radius: 999px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .hamburger::before,
 .hamburger::after {
     content: '';
     position: absolute;
-    width: 26px;
+    width: 22px;
     height: 2px;
     background: var(--text-primary);
     transition: var(--transition);
-    border-radius: 2px;
+    border-radius: 999px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.hamburger::before { top: -8px; }
-.hamburger::after { bottom: -8px; }
+.hamburger::before { top: -6px; }
+.hamburger::after { top: 6px; }
 
 .nav-toggle.active .hamburger { background: transparent; }
-.nav-toggle.active .hamburger::before { top: 0; transform: rotate(45deg); }
-.nav-toggle.active .hamburger::after { bottom: 0; transform: rotate(-45deg); }
+.nav-toggle.active .hamburger::before { top: 0; transform: translateX(-50%) rotate(45deg); }
+.nav-toggle.active .hamburger::after { top: 0; transform: translateX(-50%) rotate(-45deg); }
 
 /* ==================== HERO SECTION ==================== */
 .hero-section {
@@ -1658,18 +1674,22 @@ body {
     .nav-menu {
         position: fixed;
         top: 0;
-        right: -100%;
-        width: 320px;
+        right: -100vw;
+        width: 100vw;
+        max-width: 520px;
         height: 100vh;
-        background: var(--bg-primary);
-        border-left: 2px solid var(--border-color);
+        display: flex;
+        background: rgba(5, 5, 7, 0.94);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-left: 1px solid rgba(255, 255, 255, 0.06);
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: flex-start;
-        gap: 32px;
-        padding: 60px 40px;
-        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+        gap: 18px;
+        padding: calc(100px + env(safe-area-inset-top, 0px)) 28px 56px;
+        transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -16px 0 60px rgba(0, 0, 0, 0.6);
         z-index: 1000;
         overflow-y: auto;
     }
@@ -1679,10 +1699,13 @@ body {
     }
 
     .nav-link {
-        font-size: 20px;
-        font-weight: 700;
+        font-size: 21px;
+        font-weight: 800;
         width: 100%;
-        padding: 12px 0;
+        padding: 10px 0;
+        text-align: left;
+        color: #ffffff;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     }
 
     .nav-link::after {
@@ -1695,39 +1718,27 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         border-radius: 12px;
         background: var(--bg-elevated);
-        border: 2px solid var(--border-color);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
     }
 
     .nav-toggle:hover {
         border-color: var(--accent-primary);
-    }
-
-    /* Mobile Menu Actions in Menu */
-    .nav-menu::before {
-        content: 'Menu';
-        position: absolute;
-        top: 30px;
-        left: 40px;
-        font-size: 28px;
-        font-weight: 800;
-        color: var(--text-primary);
-        letter-spacing: -1px;
+        box-shadow: var(--shadow-md);
     }
 
     /* Backdrop for mobile menu */
     .nav-menu.active::after {
         content: '';
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 320px;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.7);
-        backdrop-filter: blur(4px);
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         z-index: -1;
     }
 
