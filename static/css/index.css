@@ -177,13 +177,14 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: rgba(160, 160, 160, 0.9);
+    color: rgba(235, 240, 255, 0.92);
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     position: relative;
     transition: var(--transition);
     padding: 10px 4px;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.35px;
+    text-shadow: 0 0 10px rgba(93, 187, 239, 0.25);
 }
 
 .nav-link::after {
@@ -201,11 +202,16 @@ body {
 
 .nav-link:hover {
     color: #ffffff;
-    text-shadow: 0 0 20px rgba(93, 187, 239, 0.5);
+    text-shadow: 0 0 22px rgba(93, 187, 239, 0.55);
+}
+
+.light-theme .nav-link {
+    color: rgba(10, 10, 10, 0.9);
+    text-shadow: none;
 }
 
 .light-theme .nav-link:hover {
-    color: #0a0a0a;
+    color: #000;
     text-shadow: none;
 }
 
